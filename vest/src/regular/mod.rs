@@ -44,3 +44,5 @@ pub mod tail;
 pub mod uints;
 /// Star combinator
 pub mod star;
+/// LEB128 combinator
+pub mod leb128;
