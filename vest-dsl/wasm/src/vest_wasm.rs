@@ -31,13 +31,13 @@ pub struct SpecTypeidxCombinator(SpecTypeidxCombinatorAlias);
 
 impl SpecCombinator for SpecTypeidxCombinator {
     type Type = SpecTypeidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTypeidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTypeidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -45,11 +45,11 @@ impl SecureSpecCombinator for SpecTypeidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTypeidxCombinatorAlias = UnsignedLEB128;
@@ -62,19 +62,19 @@ impl View for TypeidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TypeidxCombinator {
     type Type = Typeidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TypeidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -82,14 +82,14 @@ pub closed spec fn spec_typeidx() -> SpecTypeidxCombinator {
     SpecTypeidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn typeidx() -> (o: TypeidxCombinator)
     ensures o@ == spec_typeidx(),
 {
     TypeidxCombinator(UnsignedLEB128)
 }
 
-                
+
 
 #[derive(Structural, Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Reftype {
@@ -168,7 +168,7 @@ impl SpecTryFromInto for ReftypeMapper {
     type Src = ReftypeInner;
     type Dst = Reftype;
 
-    proof fn spec_iso(s: Self::Src) { 
+    proof fn spec_iso(s: Self::Src) {
         assert(
             Self::spec_apply(s) matches Ok(v) ==> {
             &&& Self::spec_rev_apply(v) is Ok
@@ -176,7 +176,7 @@ impl SpecTryFromInto for ReftypeMapper {
         });
     }
 
-    proof fn spec_iso_rev(s: Self::Dst) { 
+    proof fn spec_iso_rev(s: Self::Dst) {
         assert(
             Self::spec_rev_apply(s) matches Ok(v) ==> {
             &&& Self::spec_apply(v) is Ok
@@ -195,13 +195,13 @@ pub struct SpecReftypeCombinator(SpecReftypeCombinatorAlias);
 
 impl SpecCombinator for SpecReftypeCombinator {
     type Type = SpecReftype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecReftypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecReftypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -209,11 +209,11 @@ impl SecureSpecCombinator for SpecReftypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecReftypeCombinatorAlias = TryMap<U8, ReftypeMapper>;
@@ -226,19 +226,19 @@ impl View for ReftypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ReftypeCombinator {
     type Type = Reftype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ReftypeCombinatorAlias = TryMap<U8, ReftypeMapper>;
 
 
@@ -246,14 +246,14 @@ pub closed spec fn spec_reftype() -> SpecReftypeCombinator {
     SpecReftypeCombinator(TryMap { inner: U8, mapper: ReftypeMapper })
 }
 
-                
+
 pub fn reftype() -> (o: ReftypeCombinator)
     ensures o@ == spec_reftype(),
 {
     ReftypeCombinator(TryMap { inner: U8, mapper: ReftypeMapper })
 }
 
-                
+
 
 pub struct SpecLimitMin {
     pub min: u64,
@@ -333,13 +333,13 @@ pub struct SpecLimitMinCombinator(SpecLimitMinCombinatorAlias);
 
 impl SpecCombinator for SpecLimitMinCombinator {
     type Type = SpecLimitMin;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLimitMinCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLimitMinCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -347,11 +347,11 @@ impl SecureSpecCombinator for SpecLimitMinCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLimitMinCombinatorAlias = Mapped<UnsignedLEB128, LimitMinMapper>;
@@ -364,19 +364,19 @@ impl View for LimitMinCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LimitMinCombinator {
     type Type = LimitMin;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LimitMinCombinatorAlias = Mapped<UnsignedLEB128, LimitMinMapper>;
 
 
@@ -388,7 +388,7 @@ pub closed spec fn spec_limit_min() -> SpecLimitMinCombinator {
     })
 }
 
-                
+
 pub fn limit_min() -> (o: LimitMinCombinator)
     ensures o@ == spec_limit_min(),
 {
@@ -399,7 +399,7 @@ pub fn limit_min() -> (o: LimitMinCombinator)
     })
 }
 
-                
+
 
 pub struct SpecLimitMinMax {
     pub min: u64,
@@ -482,13 +482,13 @@ pub struct SpecLimitMinMaxCombinator(SpecLimitMinMaxCombinatorAlias);
 
 impl SpecCombinator for SpecLimitMinMaxCombinator {
     type Type = SpecLimitMinMax;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLimitMinMaxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLimitMinMaxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -496,11 +496,11 @@ impl SecureSpecCombinator for SpecLimitMinMaxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLimitMinMaxCombinatorAlias = Mapped<(UnsignedLEB128, UnsignedLEB128), LimitMinMaxMapper>;
@@ -513,19 +513,19 @@ impl View for LimitMinMaxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LimitMinMaxCombinator {
     type Type = LimitMinMax;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LimitMinMaxCombinatorAlias = Mapped<(UnsignedLEB128, UnsignedLEB128), LimitMinMaxMapper>;
 
 
@@ -537,7 +537,7 @@ pub closed spec fn spec_limit_min_max() -> SpecLimitMinMaxCombinator {
     })
 }
 
-                
+
 pub fn limit_min_max() -> (o: LimitMinMaxCombinator)
     ensures o@ == spec_limit_min_max(),
 {
@@ -548,7 +548,7 @@ pub fn limit_min_max() -> (o: LimitMinMaxCombinator)
     })
 }
 
-                
+
 
 pub enum SpecLimits {
     NoMax(SpecLimitMin),
@@ -618,7 +618,7 @@ impl From<LimitsInner> for Limits {
             Either::Right(m) => Limits::Max(m),
         }
     }
-    
+
 }
 
 
@@ -661,13 +661,13 @@ pub struct SpecLimitsCombinator(SpecLimitsCombinatorAlias);
 
 impl SpecCombinator for SpecLimitsCombinator {
     type Type = SpecLimits;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLimitsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLimitsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -675,11 +675,11 @@ impl SecureSpecCombinator for SpecLimitsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLimitsCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, SpecLimitMinCombinator>, Preceded<Tag<U8, u8>, SpecLimitMinMaxCombinator>>, LimitsMapper>;
@@ -694,19 +694,19 @@ impl View for LimitsCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LimitsCombinator {
     type Type = Limits;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LimitsCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, LimitMinCombinator>, Preceded<Tag<U8, u8>, LimitMinMaxCombinator>>, LimitsMapper>;
 
 
@@ -714,14 +714,14 @@ pub closed spec fn spec_limits() -> SpecLimitsCombinator {
     SpecLimitsCombinator(Mapped { inner: OrdChoice(Preceded(Tag::spec_new(U8, LIMITSNOMAX_0_FRONT_CONST), spec_limit_min()), Preceded(Tag::spec_new(U8, LIMITSMAX_0_FRONT_CONST), spec_limit_min_max())), mapper: LimitsMapper::spec_new() })
 }
 
-                
+
 pub fn limits() -> (o: LimitsCombinator)
     ensures o@ == spec_limits(),
 {
     LimitsCombinator(Mapped { inner: OrdChoice::new(Preceded(Tag::new(U8, LIMITSNOMAX_0_FRONT_CONST), limit_min()), Preceded(Tag::new(U8, LIMITSMAX_0_FRONT_CONST), limit_min_max())), mapper: LimitsMapper::new() })
 }
 
-                
+
 
 pub struct SpecTabletype {
     pub elemtype: SpecReftype,
@@ -804,13 +804,13 @@ pub struct SpecTabletypeCombinator(SpecTabletypeCombinatorAlias);
 
 impl SpecCombinator for SpecTabletypeCombinator {
     type Type = SpecTabletype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTabletypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTabletypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -818,11 +818,11 @@ impl SecureSpecCombinator for SpecTabletypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTabletypeCombinatorAlias = Mapped<(SpecReftypeCombinator, SpecLimitsCombinator), TabletypeMapper>;
@@ -835,19 +835,19 @@ impl View for TabletypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TabletypeCombinator {
     type Type = Tabletype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TabletypeCombinatorAlias = Mapped<(ReftypeCombinator, LimitsCombinator), TabletypeMapper>;
 
 
@@ -859,7 +859,7 @@ pub closed spec fn spec_tabletype() -> SpecTabletypeCombinator {
     })
 }
 
-                
+
 pub fn tabletype() -> (o: TabletypeCombinator)
     ensures o@ == spec_tabletype(),
 {
@@ -870,7 +870,7 @@ pub fn tabletype() -> (o: TabletypeCombinator)
     })
 }
 
-                
+
 pub type SpecMemtype = SpecLimits;
 pub type Memtype = Limits;
 
@@ -879,13 +879,13 @@ pub struct SpecMemtypeCombinator(SpecMemtypeCombinatorAlias);
 
 impl SpecCombinator for SpecMemtypeCombinator {
     type Type = SpecMemtype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemtypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemtypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -893,11 +893,11 @@ impl SecureSpecCombinator for SpecMemtypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemtypeCombinatorAlias = SpecLimitsCombinator;
@@ -910,19 +910,19 @@ impl View for MemtypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemtypeCombinator {
     type Type = Memtype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemtypeCombinatorAlias = LimitsCombinator;
 
 
@@ -930,14 +930,14 @@ pub closed spec fn spec_memtype() -> SpecMemtypeCombinator {
     SpecMemtypeCombinator(spec_limits())
 }
 
-                
+
 pub fn memtype() -> (o: MemtypeCombinator)
     ensures o@ == spec_memtype(),
 {
     MemtypeCombinator(limits())
 }
 
-                
+
 
 #[derive(Structural, Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Numtype {
@@ -1026,7 +1026,7 @@ impl SpecTryFromInto for NumtypeMapper {
     type Src = NumtypeInner;
     type Dst = Numtype;
 
-    proof fn spec_iso(s: Self::Src) { 
+    proof fn spec_iso(s: Self::Src) {
         assert(
             Self::spec_apply(s) matches Ok(v) ==> {
             &&& Self::spec_rev_apply(v) is Ok
@@ -1034,7 +1034,7 @@ impl SpecTryFromInto for NumtypeMapper {
         });
     }
 
-    proof fn spec_iso_rev(s: Self::Dst) { 
+    proof fn spec_iso_rev(s: Self::Dst) {
         assert(
             Self::spec_rev_apply(s) matches Ok(v) ==> {
             &&& Self::spec_apply(v) is Ok
@@ -1053,13 +1053,13 @@ pub struct SpecNumtypeCombinator(SpecNumtypeCombinatorAlias);
 
 impl SpecCombinator for SpecNumtypeCombinator {
     type Type = SpecNumtype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecNumtypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecNumtypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1067,11 +1067,11 @@ impl SecureSpecCombinator for SpecNumtypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecNumtypeCombinatorAlias = TryMap<U8, NumtypeMapper>;
@@ -1084,19 +1084,19 @@ impl View for NumtypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for NumtypeCombinator {
     type Type = Numtype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type NumtypeCombinatorAlias = TryMap<U8, NumtypeMapper>;
 
 
@@ -1104,14 +1104,14 @@ pub closed spec fn spec_numtype() -> SpecNumtypeCombinator {
     SpecNumtypeCombinator(TryMap { inner: U8, mapper: NumtypeMapper })
 }
 
-                
+
 pub fn numtype() -> (o: NumtypeCombinator)
     ensures o@ == spec_numtype(),
 {
     NumtypeCombinator(TryMap { inner: U8, mapper: NumtypeMapper })
 }
 
-                
+
 
 #[derive(Structural, Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Vectype {
@@ -1185,7 +1185,7 @@ impl SpecTryFromInto for VectypeMapper {
     type Src = VectypeInner;
     type Dst = Vectype;
 
-    proof fn spec_iso(s: Self::Src) { 
+    proof fn spec_iso(s: Self::Src) {
         assert(
             Self::spec_apply(s) matches Ok(v) ==> {
             &&& Self::spec_rev_apply(v) is Ok
@@ -1193,7 +1193,7 @@ impl SpecTryFromInto for VectypeMapper {
         });
     }
 
-    proof fn spec_iso_rev(s: Self::Dst) { 
+    proof fn spec_iso_rev(s: Self::Dst) {
         assert(
             Self::spec_rev_apply(s) matches Ok(v) ==> {
             &&& Self::spec_apply(v) is Ok
@@ -1212,13 +1212,13 @@ pub struct SpecVectypeCombinator(SpecVectypeCombinatorAlias);
 
 impl SpecCombinator for SpecVectypeCombinator {
     type Type = SpecVectype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecVectypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecVectypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1226,11 +1226,11 @@ impl SecureSpecCombinator for SpecVectypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecVectypeCombinatorAlias = TryMap<U8, VectypeMapper>;
@@ -1243,19 +1243,19 @@ impl View for VectypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for VectypeCombinator {
     type Type = Vectype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type VectypeCombinatorAlias = TryMap<U8, VectypeMapper>;
 
 
@@ -1263,14 +1263,14 @@ pub closed spec fn spec_vectype() -> SpecVectypeCombinator {
     SpecVectypeCombinator(TryMap { inner: U8, mapper: VectypeMapper })
 }
 
-                
+
 pub fn vectype() -> (o: VectypeCombinator)
     ensures o@ == spec_vectype(),
 {
     VectypeCombinator(TryMap { inner: U8, mapper: VectypeMapper })
 }
 
-                
+
 
 pub enum SpecValtype {
     NumTy(SpecNumtype),
@@ -1347,7 +1347,7 @@ impl From<ValtypeInner> for Valtype {
             Either::Right(Either::Right(m)) => Valtype::RefTy(m),
         }
     }
-    
+
 }
 
 
@@ -1385,34 +1385,34 @@ impl Iso for ValtypeMapper {
 impl DisjointFrom<SpecNumtypeCombinator> for SpecVectypeCombinator {
     closed spec fn disjoint_from(&self, other: &SpecNumtypeCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecNumtypeCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecNumtypeCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 
 impl DisjointFrom<SpecNumtypeCombinator> for SpecReftypeCombinator {
     closed spec fn disjoint_from(&self, other: &SpecNumtypeCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecNumtypeCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecNumtypeCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 
 impl DisjointFrom<SpecVectypeCombinator> for SpecReftypeCombinator {
     closed spec fn disjoint_from(&self, other: &SpecVectypeCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecVectypeCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecVectypeCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 pub struct SpecValtypeCombinator(SpecValtypeCombinatorAlias);
 
 impl SpecCombinator for SpecValtypeCombinator {
     type Type = SpecValtype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecValtypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecValtypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1420,11 +1420,11 @@ impl SecureSpecCombinator for SpecValtypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecValtypeCombinatorAlias = Mapped<OrdChoice<SpecNumtypeCombinator, OrdChoice<SpecVectypeCombinator, SpecReftypeCombinator>>, ValtypeMapper>;
@@ -1437,19 +1437,19 @@ impl View for ValtypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ValtypeCombinator {
     type Type = Valtype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ValtypeCombinatorAlias = Mapped<OrdChoice<NumtypeCombinator, OrdChoice<VectypeCombinator, ReftypeCombinator>>, ValtypeMapper>;
 
 
@@ -1457,14 +1457,14 @@ pub closed spec fn spec_valtype() -> SpecValtypeCombinator {
     SpecValtypeCombinator(Mapped { inner: OrdChoice(spec_numtype(), OrdChoice(spec_vectype(), spec_reftype())), mapper: ValtypeMapper::spec_new() })
 }
 
-                
+
 pub fn valtype() -> (o: ValtypeCombinator)
     ensures o@ == spec_valtype(),
 {
     ValtypeCombinator(Mapped { inner: OrdChoice::new(numtype(), OrdChoice::new(vectype(), reftype())), mapper: ValtypeMapper::new() })
 }
 
-                
+
 
 #[derive(Structural, Debug, Copy, Clone, PartialEq, Eq)]
 pub enum MutT {
@@ -1543,7 +1543,7 @@ impl SpecTryFromInto for MutTMapper {
     type Src = MutTInner;
     type Dst = MutT;
 
-    proof fn spec_iso(s: Self::Src) { 
+    proof fn spec_iso(s: Self::Src) {
         assert(
             Self::spec_apply(s) matches Ok(v) ==> {
             &&& Self::spec_rev_apply(v) is Ok
@@ -1551,7 +1551,7 @@ impl SpecTryFromInto for MutTMapper {
         });
     }
 
-    proof fn spec_iso_rev(s: Self::Dst) { 
+    proof fn spec_iso_rev(s: Self::Dst) {
         assert(
             Self::spec_rev_apply(s) matches Ok(v) ==> {
             &&& Self::spec_apply(v) is Ok
@@ -1570,13 +1570,13 @@ pub struct SpecMutTCombinator(SpecMutTCombinatorAlias);
 
 impl SpecCombinator for SpecMutTCombinator {
     type Type = SpecMutT;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMutTCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMutTCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1584,11 +1584,11 @@ impl SecureSpecCombinator for SpecMutTCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMutTCombinatorAlias = TryMap<U8, MutTMapper>;
@@ -1601,19 +1601,19 @@ impl View for MutTCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MutTCombinator {
     type Type = MutT;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MutTCombinatorAlias = TryMap<U8, MutTMapper>;
 
 
@@ -1621,14 +1621,14 @@ pub closed spec fn spec_mut_t() -> SpecMutTCombinator {
     SpecMutTCombinator(TryMap { inner: U8, mapper: MutTMapper })
 }
 
-                
+
 pub fn mut_t() -> (o: MutTCombinator)
     ensures o@ == spec_mut_t(),
 {
     MutTCombinator(TryMap { inner: U8, mapper: MutTMapper })
 }
 
-                
+
 
 pub struct SpecGlobaltype {
     pub t: SpecValtype,
@@ -1711,13 +1711,13 @@ pub struct SpecGlobaltypeCombinator(SpecGlobaltypeCombinatorAlias);
 
 impl SpecCombinator for SpecGlobaltypeCombinator {
     type Type = SpecGlobaltype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecGlobaltypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecGlobaltypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1725,11 +1725,11 @@ impl SecureSpecCombinator for SpecGlobaltypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecGlobaltypeCombinatorAlias = Mapped<(SpecValtypeCombinator, SpecMutTCombinator), GlobaltypeMapper>;
@@ -1742,19 +1742,19 @@ impl View for GlobaltypeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for GlobaltypeCombinator {
     type Type = Globaltype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type GlobaltypeCombinatorAlias = Mapped<(ValtypeCombinator, MutTCombinator), GlobaltypeMapper>;
 
 
@@ -1766,7 +1766,7 @@ pub closed spec fn spec_globaltype() -> SpecGlobaltypeCombinator {
     })
 }
 
-                
+
 pub fn globaltype() -> (o: GlobaltypeCombinator)
     ensures o@ == spec_globaltype(),
 {
@@ -1777,7 +1777,7 @@ pub fn globaltype() -> (o: GlobaltypeCombinator)
     })
 }
 
-                
+
 
 pub enum SpecImportdesc {
     Func(SpecTypeidx),
@@ -1861,7 +1861,7 @@ impl From<ImportdescInner> for Importdesc {
             Either::Right(Either::Right(Either::Right(m))) => Importdesc::Global(m),
         }
     }
-    
+
 }
 
 
@@ -1908,13 +1908,13 @@ pub struct SpecImportdescCombinator(SpecImportdescCombinatorAlias);
 
 impl SpecCombinator for SpecImportdescCombinator {
     type Type = SpecImportdesc;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecImportdescCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecImportdescCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -1922,11 +1922,11 @@ impl SecureSpecCombinator for SpecImportdescCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecImportdescCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, SpecTypeidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, SpecTabletypeCombinator>, OrdChoice<Preceded<Tag<U8, u8>, SpecMemtypeCombinator>, Preceded<Tag<U8, u8>, SpecGlobaltypeCombinator>>>>, ImportdescMapper>;
@@ -1943,19 +1943,19 @@ impl View for ImportdescCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ImportdescCombinator {
     type Type = Importdesc;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ImportdescCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, TypeidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, TabletypeCombinator>, OrdChoice<Preceded<Tag<U8, u8>, MemtypeCombinator>, Preceded<Tag<U8, u8>, GlobaltypeCombinator>>>>, ImportdescMapper>;
 
 
@@ -1963,14 +1963,14 @@ pub closed spec fn spec_importdesc() -> SpecImportdescCombinator {
     SpecImportdescCombinator(Mapped { inner: OrdChoice(Preceded(Tag::spec_new(U8, IMPORTDESCFUNC_0_FRONT_CONST), spec_typeidx()), OrdChoice(Preceded(Tag::spec_new(U8, IMPORTDESCTABLE_0_FRONT_CONST), spec_tabletype()), OrdChoice(Preceded(Tag::spec_new(U8, IMPORTDESCMEM_0_FRONT_CONST), spec_memtype()), Preceded(Tag::spec_new(U8, IMPORTDESCGLOBAL_0_FRONT_CONST), spec_globaltype())))), mapper: ImportdescMapper::spec_new() })
 }
 
-                
+
 pub fn importdesc() -> (o: ImportdescCombinator)
     ensures o@ == spec_importdesc(),
 {
     ImportdescCombinator(Mapped { inner: OrdChoice::new(Preceded(Tag::new(U8, IMPORTDESCFUNC_0_FRONT_CONST), typeidx()), OrdChoice::new(Preceded(Tag::new(U8, IMPORTDESCTABLE_0_FRONT_CONST), tabletype()), OrdChoice::new(Preceded(Tag::new(U8, IMPORTDESCMEM_0_FRONT_CONST), memtype()), Preceded(Tag::new(U8, IMPORTDESCGLOBAL_0_FRONT_CONST), globaltype())))), mapper: ImportdescMapper::new() })
 }
 
-                
+
 
 pub struct SpecFuncsecContent {
     pub l: u64,
@@ -2053,13 +2053,13 @@ pub struct SpecFuncsecContentCombinator(SpecFuncsecContentCombinatorAlias);
 
 impl SpecCombinator for SpecFuncsecContentCombinator {
     type Type = SpecFuncsecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFuncsecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFuncsecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2067,11 +2067,11 @@ impl SecureSpecCombinator for SpecFuncsecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFuncsecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecTypeidxCombinator>>, FuncsecContentMapper>;
@@ -2084,19 +2084,19 @@ impl<'a> View for FuncsecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FuncsecContentCombinator<'a> {
     type Type = FuncsecContent;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FuncsecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<TypeidxCombinator>, FuncsecContentCont0<'a>>, FuncsecContentMapper>;
 
 
@@ -2112,7 +2112,7 @@ pub open spec fn spec_funcsec_content_cont0(deps: u64) -> RepeatN<SpecTypeidxCom
     let l = deps;
     RepeatN(spec_typeidx(), l.spec_into())
 }
-                
+
 pub fn funcsec_content<'a>() -> (o: FuncsecContentCombinator<'a>)
     ensures o@ == spec_funcsec_content(),
 {
@@ -2143,7 +2143,7 @@ impl<'a> Continuation<&u64> for FuncsecContentCont0<'a> {
         RepeatN(typeidx(), l.ex_into())
     }
 }
-                
+
 pub type SpecMemidx = u64;
 pub type Memidx = u64;
 
@@ -2152,13 +2152,13 @@ pub struct SpecMemidxCombinator(SpecMemidxCombinatorAlias);
 
 impl SpecCombinator for SpecMemidxCombinator {
     type Type = SpecMemidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2166,11 +2166,11 @@ impl SecureSpecCombinator for SpecMemidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemidxCombinatorAlias = UnsignedLEB128;
@@ -2183,19 +2183,19 @@ impl View for MemidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemidxCombinator {
     type Type = Memidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -2203,14 +2203,14 @@ pub closed spec fn spec_memidx() -> SpecMemidxCombinator {
     SpecMemidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn memidx() -> (o: MemidxCombinator)
     ensures o@ == spec_memidx(),
 {
     MemidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub type SpecInstrBytecode = u8;
 pub type InstrBytecode = u8;
 
@@ -2219,13 +2219,13 @@ pub struct SpecInstrBytecodeCombinator(SpecInstrBytecodeCombinatorAlias);
 
 impl SpecCombinator for SpecInstrBytecodeCombinator {
     type Type = SpecInstrBytecode;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrBytecodeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrBytecodeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2233,11 +2233,11 @@ impl SecureSpecCombinator for SpecInstrBytecodeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrBytecodeCombinatorAlias = U8;
@@ -2250,19 +2250,19 @@ impl View for InstrBytecodeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrBytecodeCombinator {
     type Type = InstrBytecode;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrBytecodeCombinatorAlias = U8;
 
 
@@ -2270,14 +2270,14 @@ pub closed spec fn spec_instr_bytecode() -> SpecInstrBytecodeCombinator {
     SpecInstrBytecodeCombinator(U8)
 }
 
-                
+
 pub fn instr_bytecode() -> (o: InstrBytecodeCombinator)
     ensures o@ == spec_instr_bytecode(),
 {
     InstrBytecodeCombinator(U8)
 }
 
-                
+
 pub type SpecEmpty = Seq<u8>;
 pub type Empty<'a> = &'a [u8];
 
@@ -2286,13 +2286,13 @@ pub struct SpecEmptyCombinator(SpecEmptyCombinatorAlias);
 
 impl SpecCombinator for SpecEmptyCombinator {
     type Type = SpecEmpty;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecEmptyCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecEmptyCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2300,11 +2300,11 @@ impl SecureSpecCombinator for SpecEmptyCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecEmptyCombinatorAlias = BytesN<0>;
@@ -2317,19 +2317,19 @@ impl View for EmptyCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for EmptyCombinator {
     type Type = Empty<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type EmptyCombinatorAlias = BytesN<0>;
 
 
@@ -2337,14 +2337,14 @@ pub closed spec fn spec_empty() -> SpecEmptyCombinator {
     SpecEmptyCombinator(BytesN::<0>)
 }
 
-                
+
 pub fn empty() -> (o: EmptyCombinator)
     ensures o@ == spec_empty(),
 {
     EmptyCombinator(BytesN::<0>)
 }
 
-                
+
 
 pub struct SpecEmptyBlock {
     pub tag: u8,
@@ -2427,13 +2427,13 @@ pub struct SpecEmptyBlockCombinator(SpecEmptyBlockCombinatorAlias);
 
 impl SpecCombinator for SpecEmptyBlockCombinator {
     type Type = SpecEmptyBlock;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecEmptyBlockCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecEmptyBlockCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2441,11 +2441,11 @@ impl SecureSpecCombinator for SpecEmptyBlockCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecEmptyBlockCombinatorAlias = Mapped<(Refined<U8, Predicate16713707613369419146>, SpecEmptyCombinator), EmptyBlockMapper<'static>>;
@@ -2482,19 +2482,19 @@ impl<'a> View for EmptyBlockCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for EmptyBlockCombinator<'a> {
     type Type = EmptyBlock<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type EmptyBlockCombinatorAlias<'a> = Mapped<(Refined<U8, Predicate16713707613369419146>, EmptyCombinator), EmptyBlockMapper<'a>>;
 
 
@@ -2506,7 +2506,7 @@ pub closed spec fn spec_empty_block() -> SpecEmptyBlockCombinator {
     })
 }
 
-                
+
 pub fn empty_block<'a>() -> (o: EmptyBlockCombinator<'a>)
     ensures o@ == spec_empty_block(),
 {
@@ -2517,7 +2517,7 @@ pub fn empty_block<'a>() -> (o: EmptyBlockCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecValtypeBlock {
     pub tag: u8,
@@ -2600,13 +2600,13 @@ pub struct SpecValtypeBlockCombinator(SpecValtypeBlockCombinatorAlias);
 
 impl SpecCombinator for SpecValtypeBlockCombinator {
     type Type = SpecValtypeBlock;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecValtypeBlockCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecValtypeBlockCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2614,11 +2614,11 @@ impl SecureSpecCombinator for SpecValtypeBlockCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecValtypeBlockCombinatorAlias = Mapped<(Refined<U8, Predicate17051755724411564727>, SpecEmptyCombinator), ValtypeBlockMapper<'static>>;
@@ -2655,19 +2655,19 @@ impl<'a> View for ValtypeBlockCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ValtypeBlockCombinator<'a> {
     type Type = ValtypeBlock<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ValtypeBlockCombinatorAlias<'a> = Mapped<(Refined<U8, Predicate17051755724411564727>, EmptyCombinator), ValtypeBlockMapper<'a>>;
 
 
@@ -2679,7 +2679,7 @@ pub closed spec fn spec_valtype_block() -> SpecValtypeBlockCombinator {
     })
 }
 
-                
+
 pub fn valtype_block<'a>() -> (o: ValtypeBlockCombinator<'a>)
     ensures o@ == spec_valtype_block(),
 {
@@ -2690,7 +2690,7 @@ pub fn valtype_block<'a>() -> (o: ValtypeBlockCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecTypeidxBlock {
     pub tag: u8,
@@ -2773,13 +2773,13 @@ pub struct SpecTypeidxBlockCombinator(SpecTypeidxBlockCombinatorAlias);
 
 impl SpecCombinator for SpecTypeidxBlockCombinator {
     type Type = SpecTypeidxBlock;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTypeidxBlockCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTypeidxBlockCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -2787,11 +2787,11 @@ impl SecureSpecCombinator for SpecTypeidxBlockCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTypeidxBlockCombinatorAlias = Mapped<(Refined<U8, Predicate2396169508742552609>, UnsignedLEB128), TypeidxBlockMapper>;
@@ -2828,19 +2828,19 @@ impl View for TypeidxBlockCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TypeidxBlockCombinator {
     type Type = TypeidxBlock;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TypeidxBlockCombinatorAlias = Mapped<(Refined<U8, Predicate2396169508742552609>, UnsignedLEB128), TypeidxBlockMapper>;
 
 
@@ -2852,7 +2852,7 @@ pub closed spec fn spec_typeidx_block() -> SpecTypeidxBlockCombinator {
     })
 }
 
-                
+
 pub fn typeidx_block() -> (o: TypeidxBlockCombinator)
     ensures o@ == spec_typeidx_block(),
 {
@@ -2863,7 +2863,7 @@ pub fn typeidx_block() -> (o: TypeidxBlockCombinator)
     })
 }
 
-                
+
 
 pub enum SpecBlocktype {
     Empty(SpecEmptyBlock),
@@ -2940,7 +2940,7 @@ impl<'a> From<BlocktypeInner<'a>> for Blocktype<'a> {
             Either::Right(Either::Right(m)) => Blocktype::TypeIdx(m),
         }
     }
-    
+
 }
 
 
@@ -2978,34 +2978,34 @@ impl<'a> Iso for BlocktypeMapper<'a> {
 impl DisjointFrom<SpecEmptyBlockCombinator> for SpecValtypeBlockCombinator {
     closed spec fn disjoint_from(&self, other: &SpecEmptyBlockCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecEmptyBlockCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecEmptyBlockCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 
 impl DisjointFrom<SpecEmptyBlockCombinator> for SpecTypeidxBlockCombinator {
     closed spec fn disjoint_from(&self, other: &SpecEmptyBlockCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecEmptyBlockCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecEmptyBlockCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 
 impl DisjointFrom<SpecValtypeBlockCombinator> for SpecTypeidxBlockCombinator {
     closed spec fn disjoint_from(&self, other: &SpecValtypeBlockCombinator) -> bool
     { self.0.disjoint_from(&other.0) }
-    proof fn parse_disjoint_on(&self, other: &SpecValtypeBlockCombinator, buf: Seq<u8>) 
+    proof fn parse_disjoint_on(&self, other: &SpecValtypeBlockCombinator, buf: Seq<u8>)
     { self.0.parse_disjoint_on(&other.0, buf); }
 }
 pub struct SpecBlocktypeCombinator(SpecBlocktypeCombinatorAlias);
 
 impl SpecCombinator for SpecBlocktypeCombinator {
     type Type = SpecBlocktype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecBlocktypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecBlocktypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3013,11 +3013,11 @@ impl SecureSpecCombinator for SpecBlocktypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecBlocktypeCombinatorAlias = Mapped<OrdChoice<SpecEmptyBlockCombinator, OrdChoice<SpecValtypeBlockCombinator, SpecTypeidxBlockCombinator>>, BlocktypeMapper<'static>>;
@@ -3030,19 +3030,19 @@ impl<'a> View for BlocktypeCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for BlocktypeCombinator<'a> {
     type Type = Blocktype<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type BlocktypeCombinatorAlias<'a> = Mapped<OrdChoice<EmptyBlockCombinator<'a>, OrdChoice<ValtypeBlockCombinator<'a>, TypeidxBlockCombinator>>, BlocktypeMapper<'a>>;
 
 
@@ -3050,14 +3050,14 @@ pub closed spec fn spec_blocktype() -> SpecBlocktypeCombinator {
     SpecBlocktypeCombinator(Mapped { inner: OrdChoice(spec_empty_block(), OrdChoice(spec_valtype_block(), spec_typeidx_block())), mapper: BlocktypeMapper::spec_new() })
 }
 
-                
+
 pub fn blocktype<'a>() -> (o: BlocktypeCombinator<'a>)
     ensures o@ == spec_blocktype(),
 {
     BlocktypeCombinator(Mapped { inner: OrdChoice::new(empty_block(), OrdChoice::new(valtype_block(), typeidx_block())), mapper: BlocktypeMapper::new() })
 }
 
-                
+
 pub type SpecLabelidx = u64;
 pub type Labelidx = u64;
 
@@ -3066,13 +3066,13 @@ pub struct SpecLabelidxCombinator(SpecLabelidxCombinatorAlias);
 
 impl SpecCombinator for SpecLabelidxCombinator {
     type Type = SpecLabelidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLabelidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLabelidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3080,11 +3080,11 @@ impl SecureSpecCombinator for SpecLabelidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLabelidxCombinatorAlias = UnsignedLEB128;
@@ -3097,19 +3097,19 @@ impl View for LabelidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LabelidxCombinator {
     type Type = Labelidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LabelidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -3117,14 +3117,14 @@ pub closed spec fn spec_labelidx() -> SpecLabelidxCombinator {
     SpecLabelidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn labelidx() -> (o: LabelidxCombinator)
     ensures o@ == spec_labelidx(),
 {
     LabelidxCombinator(UnsignedLEB128)
 }
 
-                
+
 
 pub struct SpecLabelidxVec {
     pub l: u64,
@@ -3207,13 +3207,13 @@ pub struct SpecLabelidxVecCombinator(SpecLabelidxVecCombinatorAlias);
 
 impl SpecCombinator for SpecLabelidxVecCombinator {
     type Type = SpecLabelidxVec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLabelidxVecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLabelidxVecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3221,11 +3221,11 @@ impl SecureSpecCombinator for SpecLabelidxVecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLabelidxVecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecLabelidxCombinator>>, LabelidxVecMapper>;
@@ -3238,19 +3238,19 @@ impl<'a> View for LabelidxVecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LabelidxVecCombinator<'a> {
     type Type = LabelidxVec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LabelidxVecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<LabelidxCombinator>, LabelidxVecCont0<'a>>, LabelidxVecMapper>;
 
 
@@ -3266,7 +3266,7 @@ pub open spec fn spec_labelidx_vec_cont0(deps: u64) -> RepeatN<SpecLabelidxCombi
     let l = deps;
     RepeatN(spec_labelidx(), l.spec_into())
 }
-                
+
 pub fn labelidx_vec<'a>() -> (o: LabelidxVecCombinator<'a>)
     ensures o@ == spec_labelidx_vec(),
 {
@@ -3297,7 +3297,7 @@ impl<'a> Continuation<&u64> for LabelidxVecCont0<'a> {
         RepeatN(labelidx(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecBrTable {
     pub l: SpecLabelidxVec,
@@ -3380,13 +3380,13 @@ pub struct SpecBrTableCombinator(SpecBrTableCombinatorAlias);
 
 impl SpecCombinator for SpecBrTableCombinator {
     type Type = SpecBrTable;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecBrTableCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecBrTableCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3394,11 +3394,11 @@ impl SecureSpecCombinator for SpecBrTableCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecBrTableCombinatorAlias = Mapped<(SpecLabelidxVecCombinator, SpecLabelidxCombinator), BrTableMapper>;
@@ -3411,19 +3411,19 @@ impl<'a> View for BrTableCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for BrTableCombinator<'a> {
     type Type = BrTable;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type BrTableCombinatorAlias<'a> = Mapped<(LabelidxVecCombinator<'a>, LabelidxCombinator), BrTableMapper>;
 
 
@@ -3435,7 +3435,7 @@ pub closed spec fn spec_br_table() -> SpecBrTableCombinator {
     })
 }
 
-                
+
 pub fn br_table<'a>() -> (o: BrTableCombinator<'a>)
     ensures o@ == spec_br_table(),
 {
@@ -3446,7 +3446,7 @@ pub fn br_table<'a>() -> (o: BrTableCombinator<'a>)
     })
 }
 
-                
+
 pub type SpecFuncidx = u64;
 pub type Funcidx = u64;
 
@@ -3455,13 +3455,13 @@ pub struct SpecFuncidxCombinator(SpecFuncidxCombinatorAlias);
 
 impl SpecCombinator for SpecFuncidxCombinator {
     type Type = SpecFuncidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFuncidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFuncidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3469,11 +3469,11 @@ impl SecureSpecCombinator for SpecFuncidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFuncidxCombinatorAlias = UnsignedLEB128;
@@ -3486,19 +3486,19 @@ impl View for FuncidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FuncidxCombinator {
     type Type = Funcidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FuncidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -3506,14 +3506,14 @@ pub closed spec fn spec_funcidx() -> SpecFuncidxCombinator {
     SpecFuncidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn funcidx() -> (o: FuncidxCombinator)
     ensures o@ == spec_funcidx(),
 {
     FuncidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub type SpecTableidx = u64;
 pub type Tableidx = u64;
 
@@ -3522,13 +3522,13 @@ pub struct SpecTableidxCombinator(SpecTableidxCombinatorAlias);
 
 impl SpecCombinator for SpecTableidxCombinator {
     type Type = SpecTableidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3536,11 +3536,11 @@ impl SecureSpecCombinator for SpecTableidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableidxCombinatorAlias = UnsignedLEB128;
@@ -3553,19 +3553,19 @@ impl View for TableidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableidxCombinator {
     type Type = Tableidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -3573,14 +3573,14 @@ pub closed spec fn spec_tableidx() -> SpecTableidxCombinator {
     SpecTableidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn tableidx() -> (o: TableidxCombinator)
     ensures o@ == spec_tableidx(),
 {
     TableidxCombinator(UnsignedLEB128)
 }
 
-                
+
 
 pub struct SpecCallIndirect {
     pub y: SpecTypeidx,
@@ -3663,13 +3663,13 @@ pub struct SpecCallIndirectCombinator(SpecCallIndirectCombinatorAlias);
 
 impl SpecCombinator for SpecCallIndirectCombinator {
     type Type = SpecCallIndirect;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCallIndirectCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCallIndirectCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3677,11 +3677,11 @@ impl SecureSpecCombinator for SpecCallIndirectCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCallIndirectCombinatorAlias = Mapped<(SpecTypeidxCombinator, SpecTableidxCombinator), CallIndirectMapper>;
@@ -3694,19 +3694,19 @@ impl View for CallIndirectCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CallIndirectCombinator {
     type Type = CallIndirect;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CallIndirectCombinatorAlias = Mapped<(TypeidxCombinator, TableidxCombinator), CallIndirectMapper>;
 
 
@@ -3718,7 +3718,7 @@ pub closed spec fn spec_call_indirect() -> SpecCallIndirectCombinator {
     })
 }
 
-                
+
 pub fn call_indirect() -> (o: CallIndirectCombinator)
     ensures o@ == spec_call_indirect(),
 {
@@ -3729,7 +3729,7 @@ pub fn call_indirect() -> (o: CallIndirectCombinator)
     })
 }
 
-                
+
 
 pub struct SpecSelectT {
     pub l: u64,
@@ -3812,13 +3812,13 @@ pub struct SpecSelectTCombinator(SpecSelectTCombinatorAlias);
 
 impl SpecCombinator for SpecSelectTCombinator {
     type Type = SpecSelectT;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecSelectTCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecSelectTCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3826,11 +3826,11 @@ impl SecureSpecCombinator for SpecSelectTCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecSelectTCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecValtypeCombinator>>, SelectTMapper>;
@@ -3843,19 +3843,19 @@ impl<'a> View for SelectTCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for SelectTCombinator<'a> {
     type Type = SelectT;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type SelectTCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ValtypeCombinator>, SelectTCont0<'a>>, SelectTMapper>;
 
 
@@ -3871,7 +3871,7 @@ pub open spec fn spec_select_t_cont0(deps: u64) -> RepeatN<SpecValtypeCombinator
     let l = deps;
     RepeatN(spec_valtype(), l.spec_into())
 }
-                
+
 pub fn select_t<'a>() -> (o: SelectTCombinator<'a>)
     ensures o@ == spec_select_t(),
 {
@@ -3902,7 +3902,7 @@ impl<'a> Continuation<&u64> for SelectTCont0<'a> {
         RepeatN(valtype(), l.ex_into())
     }
 }
-                
+
 pub type SpecLocalidx = u64;
 pub type Localidx = u64;
 
@@ -3911,13 +3911,13 @@ pub struct SpecLocalidxCombinator(SpecLocalidxCombinatorAlias);
 
 impl SpecCombinator for SpecLocalidxCombinator {
     type Type = SpecLocalidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLocalidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLocalidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3925,11 +3925,11 @@ impl SecureSpecCombinator for SpecLocalidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLocalidxCombinatorAlias = UnsignedLEB128;
@@ -3942,19 +3942,19 @@ impl View for LocalidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LocalidxCombinator {
     type Type = Localidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LocalidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -3962,14 +3962,14 @@ pub closed spec fn spec_localidx() -> SpecLocalidxCombinator {
     SpecLocalidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn localidx() -> (o: LocalidxCombinator)
     ensures o@ == spec_localidx(),
 {
     LocalidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub type SpecGlobalidx = u64;
 pub type Globalidx = u64;
 
@@ -3978,13 +3978,13 @@ pub struct SpecGlobalidxCombinator(SpecGlobalidxCombinatorAlias);
 
 impl SpecCombinator for SpecGlobalidxCombinator {
     type Type = SpecGlobalidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecGlobalidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecGlobalidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -3992,11 +3992,11 @@ impl SecureSpecCombinator for SpecGlobalidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecGlobalidxCombinatorAlias = UnsignedLEB128;
@@ -4009,19 +4009,19 @@ impl View for GlobalidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for GlobalidxCombinator {
     type Type = Globalidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type GlobalidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -4029,14 +4029,14 @@ pub closed spec fn spec_globalidx() -> SpecGlobalidxCombinator {
     SpecGlobalidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn globalidx() -> (o: GlobalidxCombinator)
     ensures o@ == spec_globalidx(),
 {
     GlobalidxCombinator(UnsignedLEB128)
 }
 
-                
+
 
 pub struct SpecMemarg {
     pub align: u64,
@@ -4119,13 +4119,13 @@ pub struct SpecMemargCombinator(SpecMemargCombinatorAlias);
 
 impl SpecCombinator for SpecMemargCombinator {
     type Type = SpecMemarg;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemargCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemargCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4133,11 +4133,11 @@ impl SecureSpecCombinator for SpecMemargCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemargCombinatorAlias = Mapped<(UnsignedLEB128, UnsignedLEB128), MemargMapper>;
@@ -4150,19 +4150,19 @@ impl View for MemargCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemargCombinator {
     type Type = Memarg;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemargCombinatorAlias = Mapped<(UnsignedLEB128, UnsignedLEB128), MemargMapper>;
 
 
@@ -4174,7 +4174,7 @@ pub closed spec fn spec_memarg() -> SpecMemargCombinator {
     })
 }
 
-                
+
 pub fn memarg() -> (o: MemargCombinator)
     ensures o@ == spec_memarg(),
 {
@@ -4185,7 +4185,7 @@ pub fn memarg() -> (o: MemargCombinator)
     })
 }
 
-                
+
 
 pub struct SpecByteZero {
     pub zero: u8,
@@ -4266,13 +4266,13 @@ pub struct SpecByteZeroCombinator(SpecByteZeroCombinatorAlias);
 
 impl SpecCombinator for SpecByteZeroCombinator {
     type Type = SpecByteZero;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecByteZeroCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecByteZeroCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4280,11 +4280,11 @@ impl SecureSpecCombinator for SpecByteZeroCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecByteZeroCombinatorAlias = Mapped<Refined<U8, TagPred<u8>>, ByteZeroMapper>;
@@ -4297,19 +4297,19 @@ impl View for ByteZeroCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ByteZeroCombinator {
     type Type = ByteZero;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ByteZeroCombinatorAlias = Mapped<Refined<U8, TagPred<u8>>, ByteZeroMapper>;
 
 
@@ -4321,7 +4321,7 @@ pub closed spec fn spec_byte_zero() -> SpecByteZeroCombinator {
     })
 }
 
-                
+
 pub fn byte_zero() -> (o: ByteZeroCombinator)
     ensures o@ == spec_byte_zero(),
 {
@@ -4332,7 +4332,7 @@ pub fn byte_zero() -> (o: ByteZeroCombinator)
     })
 }
 
-                
+
 pub type SpecF32 = Seq<u8>;
 pub type F32<'a> = &'a [u8];
 
@@ -4341,13 +4341,13 @@ pub struct SpecF32Combinator(SpecF32CombinatorAlias);
 
 impl SpecCombinator for SpecF32Combinator {
     type Type = SpecF32;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecF32Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecF32CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4355,11 +4355,11 @@ impl SecureSpecCombinator for SpecF32Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecF32CombinatorAlias = BytesN<4>;
@@ -4372,19 +4372,19 @@ impl View for F32Combinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for F32Combinator {
     type Type = F32<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type F32CombinatorAlias = BytesN<4>;
 
 
@@ -4392,14 +4392,14 @@ pub closed spec fn spec_f32() -> SpecF32Combinator {
     SpecF32Combinator(BytesN::<4>)
 }
 
-                
+
 pub fn f32() -> (o: F32Combinator)
     ensures o@ == spec_f32(),
 {
     F32Combinator(BytesN::<4>)
 }
 
-                
+
 pub type SpecF64 = Seq<u8>;
 pub type F64<'a> = &'a [u8];
 
@@ -4408,13 +4408,13 @@ pub struct SpecF64Combinator(SpecF64CombinatorAlias);
 
 impl SpecCombinator for SpecF64Combinator {
     type Type = SpecF64;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecF64Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecF64CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4422,11 +4422,11 @@ impl SecureSpecCombinator for SpecF64Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecF64CombinatorAlias = BytesN<8>;
@@ -4439,19 +4439,19 @@ impl View for F64Combinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for F64Combinator {
     type Type = F64<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type F64CombinatorAlias = BytesN<8>;
 
 
@@ -4459,14 +4459,14 @@ pub closed spec fn spec_f64() -> SpecF64Combinator {
     SpecF64Combinator(BytesN::<8>)
 }
 
-                
+
 pub fn f64() -> (o: F64Combinator)
     ensures o@ == spec_f64(),
 {
     F64Combinator(BytesN::<8>)
 }
 
-                
+
 pub type SpecElemidx = u64;
 pub type Elemidx = u64;
 
@@ -4475,13 +4475,13 @@ pub struct SpecElemidxCombinator(SpecElemidxCombinatorAlias);
 
 impl SpecCombinator for SpecElemidxCombinator {
     type Type = SpecElemidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecElemidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecElemidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4489,11 +4489,11 @@ impl SecureSpecCombinator for SpecElemidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecElemidxCombinatorAlias = UnsignedLEB128;
@@ -4506,19 +4506,19 @@ impl View for ElemidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ElemidxCombinator {
     type Type = Elemidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ElemidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -4526,14 +4526,14 @@ pub closed spec fn spec_elemidx() -> SpecElemidxCombinator {
     SpecElemidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn elemidx() -> (o: ElemidxCombinator)
     ensures o@ == spec_elemidx(),
 {
     ElemidxCombinator(UnsignedLEB128)
 }
 
-                
+
 
 pub struct SpecTableInit {
     pub y: SpecElemidx,
@@ -4616,13 +4616,13 @@ pub struct SpecTableInitCombinator(SpecTableInitCombinatorAlias);
 
 impl SpecCombinator for SpecTableInitCombinator {
     type Type = SpecTableInit;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableInitCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableInitCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4630,11 +4630,11 @@ impl SecureSpecCombinator for SpecTableInitCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableInitCombinatorAlias = Mapped<(SpecElemidxCombinator, SpecTableidxCombinator), TableInitMapper>;
@@ -4647,19 +4647,19 @@ impl View for TableInitCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableInitCombinator {
     type Type = TableInit;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableInitCombinatorAlias = Mapped<(ElemidxCombinator, TableidxCombinator), TableInitMapper>;
 
 
@@ -4671,7 +4671,7 @@ pub closed spec fn spec_table_init() -> SpecTableInitCombinator {
     })
 }
 
-                
+
 pub fn table_init() -> (o: TableInitCombinator)
     ensures o@ == spec_table_init(),
 {
@@ -4682,7 +4682,7 @@ pub fn table_init() -> (o: TableInitCombinator)
     })
 }
 
-                
+
 pub type SpecElemDrop = SpecElemidx;
 pub type ElemDrop = Elemidx;
 
@@ -4691,13 +4691,13 @@ pub struct SpecElemDropCombinator(SpecElemDropCombinatorAlias);
 
 impl SpecCombinator for SpecElemDropCombinator {
     type Type = SpecElemDrop;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecElemDropCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecElemDropCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4705,11 +4705,11 @@ impl SecureSpecCombinator for SpecElemDropCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecElemDropCombinatorAlias = SpecElemidxCombinator;
@@ -4722,19 +4722,19 @@ impl View for ElemDropCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ElemDropCombinator {
     type Type = ElemDrop;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ElemDropCombinatorAlias = ElemidxCombinator;
 
 
@@ -4742,14 +4742,14 @@ pub closed spec fn spec_elem_drop() -> SpecElemDropCombinator {
     SpecElemDropCombinator(spec_elemidx())
 }
 
-                
+
 pub fn elem_drop() -> (o: ElemDropCombinator)
     ensures o@ == spec_elem_drop(),
 {
     ElemDropCombinator(elemidx())
 }
 
-                
+
 
 pub struct SpecTableCopy {
     pub x: SpecTableidx,
@@ -4832,13 +4832,13 @@ pub struct SpecTableCopyCombinator(SpecTableCopyCombinatorAlias);
 
 impl SpecCombinator for SpecTableCopyCombinator {
     type Type = SpecTableCopy;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableCopyCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableCopyCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4846,11 +4846,11 @@ impl SecureSpecCombinator for SpecTableCopyCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableCopyCombinatorAlias = Mapped<(SpecTableidxCombinator, SpecTableidxCombinator), TableCopyMapper>;
@@ -4863,19 +4863,19 @@ impl View for TableCopyCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableCopyCombinator {
     type Type = TableCopy;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableCopyCombinatorAlias = Mapped<(TableidxCombinator, TableidxCombinator), TableCopyMapper>;
 
 
@@ -4887,7 +4887,7 @@ pub closed spec fn spec_table_copy() -> SpecTableCopyCombinator {
     })
 }
 
-                
+
 pub fn table_copy() -> (o: TableCopyCombinator)
     ensures o@ == spec_table_copy(),
 {
@@ -4898,7 +4898,7 @@ pub fn table_copy() -> (o: TableCopyCombinator)
     })
 }
 
-                
+
 pub type SpecTableGrow = SpecTableidx;
 pub type TableGrow = Tableidx;
 
@@ -4907,13 +4907,13 @@ pub struct SpecTableGrowCombinator(SpecTableGrowCombinatorAlias);
 
 impl SpecCombinator for SpecTableGrowCombinator {
     type Type = SpecTableGrow;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableGrowCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableGrowCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4921,11 +4921,11 @@ impl SecureSpecCombinator for SpecTableGrowCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableGrowCombinatorAlias = SpecTableidxCombinator;
@@ -4938,19 +4938,19 @@ impl View for TableGrowCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableGrowCombinator {
     type Type = TableGrow;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableGrowCombinatorAlias = TableidxCombinator;
 
 
@@ -4958,14 +4958,14 @@ pub closed spec fn spec_table_grow() -> SpecTableGrowCombinator {
     SpecTableGrowCombinator(spec_tableidx())
 }
 
-                
+
 pub fn table_grow() -> (o: TableGrowCombinator)
     ensures o@ == spec_table_grow(),
 {
     TableGrowCombinator(tableidx())
 }
 
-                
+
 pub type SpecTableSize = SpecTableidx;
 pub type TableSize = Tableidx;
 
@@ -4974,13 +4974,13 @@ pub struct SpecTableSizeCombinator(SpecTableSizeCombinatorAlias);
 
 impl SpecCombinator for SpecTableSizeCombinator {
     type Type = SpecTableSize;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableSizeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableSizeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -4988,11 +4988,11 @@ impl SecureSpecCombinator for SpecTableSizeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableSizeCombinatorAlias = SpecTableidxCombinator;
@@ -5005,19 +5005,19 @@ impl View for TableSizeCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableSizeCombinator {
     type Type = TableSize;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableSizeCombinatorAlias = TableidxCombinator;
 
 
@@ -5025,14 +5025,14 @@ pub closed spec fn spec_table_size() -> SpecTableSizeCombinator {
     SpecTableSizeCombinator(spec_tableidx())
 }
 
-                
+
 pub fn table_size() -> (o: TableSizeCombinator)
     ensures o@ == spec_table_size(),
 {
     TableSizeCombinator(tableidx())
 }
 
-                
+
 pub type SpecTableFill = SpecTableidx;
 pub type TableFill = Tableidx;
 
@@ -5041,13 +5041,13 @@ pub struct SpecTableFillCombinator(SpecTableFillCombinatorAlias);
 
 impl SpecCombinator for SpecTableFillCombinator {
     type Type = SpecTableFill;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableFillCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableFillCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5055,11 +5055,11 @@ impl SecureSpecCombinator for SpecTableFillCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableFillCombinatorAlias = SpecTableidxCombinator;
@@ -5072,19 +5072,19 @@ impl View for TableFillCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableFillCombinator {
     type Type = TableFill;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableFillCombinatorAlias = TableidxCombinator;
 
 
@@ -5092,14 +5092,14 @@ pub closed spec fn spec_table_fill() -> SpecTableFillCombinator {
     SpecTableFillCombinator(spec_tableidx())
 }
 
-                
+
 pub fn table_fill() -> (o: TableFillCombinator)
     ensures o@ == spec_table_fill(),
 {
     TableFillCombinator(tableidx())
 }
 
-                
+
 pub type SpecDataidx = u64;
 pub type Dataidx = u64;
 
@@ -5108,13 +5108,13 @@ pub struct SpecDataidxCombinator(SpecDataidxCombinatorAlias);
 
 impl SpecCombinator for SpecDataidxCombinator {
     type Type = SpecDataidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDataidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDataidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5122,11 +5122,11 @@ impl SecureSpecCombinator for SpecDataidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDataidxCombinatorAlias = UnsignedLEB128;
@@ -5139,19 +5139,19 @@ impl View for DataidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DataidxCombinator {
     type Type = Dataidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DataidxCombinatorAlias = UnsignedLEB128;
 
 
@@ -5159,14 +5159,14 @@ pub closed spec fn spec_dataidx() -> SpecDataidxCombinator {
     SpecDataidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub fn dataidx() -> (o: DataidxCombinator)
     ensures o@ == spec_dataidx(),
 {
     DataidxCombinator(UnsignedLEB128)
 }
 
-                
+
 pub type SpecMemoryInit = SpecDataidx;
 pub type MemoryInit = Dataidx;
 
@@ -5177,13 +5177,13 @@ pub struct SpecMemoryInitCombinator(SpecMemoryInitCombinatorAlias);
 
 impl SpecCombinator for SpecMemoryInitCombinator {
     type Type = SpecMemoryInit;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemoryInitCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemoryInitCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5191,11 +5191,11 @@ impl SecureSpecCombinator for SpecMemoryInitCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemoryInitCombinatorAlias = Terminated<SpecDataidxCombinator, Tag<U8, u8>>;
@@ -5209,19 +5209,19 @@ impl View for MemoryInitCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemoryInitCombinator {
     type Type = MemoryInit;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemoryInitCombinatorAlias = Terminated<DataidxCombinator, Tag<U8, u8>>;
 
 
@@ -5229,14 +5229,14 @@ pub closed spec fn spec_memory_init() -> SpecMemoryInitCombinator {
     SpecMemoryInitCombinator(Terminated(spec_dataidx(), Tag::spec_new(U8, MemoryInit_0_BACK_CONST)))
 }
 
-                
+
 pub fn memory_init() -> (o: MemoryInitCombinator)
     ensures o@ == spec_memory_init(),
 {
     MemoryInitCombinator(Terminated(dataidx(), Tag::new(U8, MemoryInit_0_BACK_CONST)))
 }
 
-                
+
 pub type SpecDataDrop = SpecDataidx;
 pub type DataDrop = Dataidx;
 
@@ -5245,13 +5245,13 @@ pub struct SpecDataDropCombinator(SpecDataDropCombinatorAlias);
 
 impl SpecCombinator for SpecDataDropCombinator {
     type Type = SpecDataDrop;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDataDropCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDataDropCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5259,11 +5259,11 @@ impl SecureSpecCombinator for SpecDataDropCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDataDropCombinatorAlias = SpecDataidxCombinator;
@@ -5276,19 +5276,19 @@ impl View for DataDropCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DataDropCombinator {
     type Type = DataDrop;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DataDropCombinatorAlias = DataidxCombinator;
 
 
@@ -5296,14 +5296,14 @@ pub closed spec fn spec_data_drop() -> SpecDataDropCombinator {
     SpecDataDropCombinator(spec_dataidx())
 }
 
-                
+
 pub fn data_drop() -> (o: DataDropCombinator)
     ensures o@ == spec_data_drop(),
 {
     DataDropCombinator(dataidx())
 }
 
-                
+
 
 pub struct SpecMemoryCopy {
     pub reserved: Seq<u8>,
@@ -5383,13 +5383,13 @@ pub struct SpecMemoryCopyCombinator(SpecMemoryCopyCombinatorAlias);
 
 impl SpecCombinator for SpecMemoryCopyCombinator {
     type Type = SpecMemoryCopy;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemoryCopyCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemoryCopyCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5397,11 +5397,11 @@ impl SecureSpecCombinator for SpecMemoryCopyCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemoryCopyCombinatorAlias = Mapped<Refined<BytesN<2>, TagPred<Seq<u8>>>, MemoryCopyMapper<'static>>;
@@ -5421,19 +5421,19 @@ impl<'a> View for MemoryCopyCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemoryCopyCombinator<'a> {
     type Type = MemoryCopy<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemoryCopyCombinatorAlias<'a> = Mapped<Refined<BytesN<2>, TagPred<&'a [u8]>>, MemoryCopyMapper<'a>>;
 
 
@@ -5445,7 +5445,7 @@ pub closed spec fn spec_memory_copy() -> SpecMemoryCopyCombinator {
     })
 }
 
-                
+
 pub fn memory_copy<'a>() -> (o: MemoryCopyCombinator<'a>)
     ensures o@ == spec_memory_copy(),
 {
@@ -5456,7 +5456,7 @@ pub fn memory_copy<'a>() -> (o: MemoryCopyCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecMemoryFill {
     pub reserved: u8,
@@ -5537,13 +5537,13 @@ pub struct SpecMemoryFillCombinator(SpecMemoryFillCombinatorAlias);
 
 impl SpecCombinator for SpecMemoryFillCombinator {
     type Type = SpecMemoryFill;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemoryFillCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemoryFillCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5551,11 +5551,11 @@ impl SecureSpecCombinator for SpecMemoryFillCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemoryFillCombinatorAlias = Mapped<Refined<U8, TagPred<u8>>, MemoryFillMapper>;
@@ -5568,19 +5568,19 @@ impl View for MemoryFillCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemoryFillCombinator {
     type Type = MemoryFill;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemoryFillCombinatorAlias = Mapped<Refined<U8, TagPred<u8>>, MemoryFillMapper>;
 
 
@@ -5592,7 +5592,7 @@ pub closed spec fn spec_memory_fill() -> SpecMemoryFillCombinator {
     })
 }
 
-                
+
 pub fn memory_fill() -> (o: MemoryFillCombinator)
     ensures o@ == spec_memory_fill(),
 {
@@ -5603,7 +5603,7 @@ pub fn memory_fill() -> (o: MemoryFillCombinator)
     })
 }
 
-                
+
 
 pub enum SpecInstrWithFcRest {
     Variant0(SpecTableInit),
@@ -5736,7 +5736,7 @@ impl<'a> From<InstrWithFcRestInner<'a>> for InstrWithFcRest<'a> {
             Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(m)))))))))) => InstrWithFcRest::Variant10(m),
         }
     }
-    
+
 }
 
 
@@ -5775,13 +5775,13 @@ pub struct SpecInstrWithFcRestCombinator(SpecInstrWithFcRestCombinatorAlias);
 
 impl SpecCombinator for SpecInstrWithFcRestCombinator {
     type Type = SpecInstrWithFcRest;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrWithFcRestCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrWithFcRestCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5789,11 +5789,11 @@ impl SecureSpecCombinator for SpecInstrWithFcRestCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrWithFcRestCombinatorAlias = Mapped<OrdChoice<Cond<SpecTableInitCombinator>, OrdChoice<Cond<SpecElemDropCombinator>, OrdChoice<Cond<SpecTableCopyCombinator>, OrdChoice<Cond<SpecTableGrowCombinator>, OrdChoice<Cond<SpecTableSizeCombinator>, OrdChoice<Cond<SpecTableFillCombinator>, OrdChoice<Cond<SpecMemoryInitCombinator>, OrdChoice<Cond<SpecDataDropCombinator>, OrdChoice<Cond<SpecMemoryCopyCombinator>, OrdChoice<Cond<SpecMemoryFillCombinator>, Cond<SpecEmptyCombinator>>>>>>>>>>>, InstrWithFcRestMapper<'static>>;
@@ -5806,19 +5806,19 @@ impl<'a> View for InstrWithFcRestCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrWithFcRestCombinator<'a> {
     type Type = InstrWithFcRest<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrWithFcRestCombinatorAlias<'a> = Mapped<OrdChoice<Cond<TableInitCombinator>, OrdChoice<Cond<ElemDropCombinator>, OrdChoice<Cond<TableCopyCombinator>, OrdChoice<Cond<TableGrowCombinator>, OrdChoice<Cond<TableSizeCombinator>, OrdChoice<Cond<TableFillCombinator>, OrdChoice<Cond<MemoryInitCombinator>, OrdChoice<Cond<DataDropCombinator>, OrdChoice<Cond<MemoryCopyCombinator<'a>>, OrdChoice<Cond<MemoryFillCombinator>, Cond<EmptyCombinator>>>>>>>>>>>, InstrWithFcRestMapper<'a>>;
 
 
@@ -5914,13 +5914,13 @@ pub struct SpecInstrWithFcCombinator(SpecInstrWithFcCombinatorAlias);
 
 impl SpecCombinator for SpecInstrWithFcCombinator {
     type Type = SpecInstrWithFc;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrWithFcCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrWithFcCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -5928,11 +5928,11 @@ impl SecureSpecCombinator for SpecInstrWithFcCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrWithFcCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, SpecInstrWithFcRestCombinator>, InstrWithFcMapper<'static>>;
@@ -5945,19 +5945,19 @@ impl<'a> View for InstrWithFcCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrWithFcCombinator<'a> {
     type Type = InstrWithFc<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrWithFcCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, InstrWithFcRestCombinator<'a>, InstrWithFcCont0<'a>>, InstrWithFcMapper<'a>>;
 
 
@@ -5973,7 +5973,7 @@ pub open spec fn spec_instr_with_fc_cont0(deps: u64) -> SpecInstrWithFcRestCombi
     let tag = deps;
     spec_instr_with_fc_rest(tag)
 }
-                
+
 pub fn instr_with_fc<'a>() -> (o: InstrWithFcCombinator<'a>)
     ensures o@ == spec_instr_with_fc(),
 {
@@ -6004,7 +6004,7 @@ impl<'a> Continuation<&u64> for InstrWithFcCont0<'a> {
         instr_with_fc_rest(tag)
     }
 }
-                
+
 pub type SpecLaneidx = u8;
 pub type Laneidx = u8;
 
@@ -6013,13 +6013,13 @@ pub struct SpecLaneidxCombinator(SpecLaneidxCombinatorAlias);
 
 impl SpecCombinator for SpecLaneidxCombinator {
     type Type = SpecLaneidx;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLaneidxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLaneidxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6027,11 +6027,11 @@ impl SecureSpecCombinator for SpecLaneidxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLaneidxCombinatorAlias = U8;
@@ -6044,19 +6044,19 @@ impl View for LaneidxCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LaneidxCombinator {
     type Type = Laneidx;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LaneidxCombinatorAlias = U8;
 
 
@@ -6064,14 +6064,14 @@ pub closed spec fn spec_laneidx() -> SpecLaneidxCombinator {
     SpecLaneidxCombinator(U8)
 }
 
-                
+
 pub fn laneidx() -> (o: LaneidxCombinator)
     ensures o@ == spec_laneidx(),
 {
     LaneidxCombinator(U8)
 }
 
-                
+
 
 pub struct SpecV128Lane {
     pub m: SpecMemarg,
@@ -6154,13 +6154,13 @@ pub struct SpecV128LaneCombinator(SpecV128LaneCombinatorAlias);
 
 impl SpecCombinator for SpecV128LaneCombinator {
     type Type = SpecV128Lane;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecV128LaneCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecV128LaneCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6168,11 +6168,11 @@ impl SecureSpecCombinator for SpecV128LaneCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecV128LaneCombinatorAlias = Mapped<(SpecMemargCombinator, SpecLaneidxCombinator), V128LaneMapper>;
@@ -6185,19 +6185,19 @@ impl View for V128LaneCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for V128LaneCombinator {
     type Type = V128Lane;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type V128LaneCombinatorAlias = Mapped<(MemargCombinator, LaneidxCombinator), V128LaneMapper>;
 
 
@@ -6209,7 +6209,7 @@ pub closed spec fn spec_v128_lane() -> SpecV128LaneCombinator {
     })
 }
 
-                
+
 pub fn v128_lane() -> (o: V128LaneCombinator)
     ensures o@ == spec_v128_lane(),
 {
@@ -6220,7 +6220,7 @@ pub fn v128_lane() -> (o: V128LaneCombinator)
     })
 }
 
-                
+
 pub type SpecV128Const = Seq<u8>;
 pub type V128Const<'a> = &'a [u8];
 
@@ -6229,13 +6229,13 @@ pub struct SpecV128ConstCombinator(SpecV128ConstCombinatorAlias);
 
 impl SpecCombinator for SpecV128ConstCombinator {
     type Type = SpecV128Const;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecV128ConstCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecV128ConstCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6243,11 +6243,11 @@ impl SecureSpecCombinator for SpecV128ConstCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecV128ConstCombinatorAlias = BytesN<16>;
@@ -6260,19 +6260,19 @@ impl View for V128ConstCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for V128ConstCombinator {
     type Type = V128Const<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type V128ConstCombinatorAlias = BytesN<16>;
 
 
@@ -6280,14 +6280,14 @@ pub closed spec fn spec_v128_const() -> SpecV128ConstCombinator {
     SpecV128ConstCombinator(BytesN::<16>)
 }
 
-                
+
 pub fn v128_const() -> (o: V128ConstCombinator)
     ensures o@ == spec_v128_const(),
 {
     V128ConstCombinator(BytesN::<16>)
 }
 
-                
+
 pub type SpecShuffle = Seq<SpecLaneidx>;
 pub type Shuffle = RepeatResult<Laneidx>;
 
@@ -6296,13 +6296,13 @@ pub struct SpecShuffleCombinator(SpecShuffleCombinatorAlias);
 
 impl SpecCombinator for SpecShuffleCombinator {
     type Type = SpecShuffle;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecShuffleCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecShuffleCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6310,11 +6310,11 @@ impl SecureSpecCombinator for SpecShuffleCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecShuffleCombinatorAlias = RepeatN<SpecLaneidxCombinator>;
@@ -6327,19 +6327,19 @@ impl View for ShuffleCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ShuffleCombinator {
     type Type = Shuffle;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ShuffleCombinatorAlias = RepeatN<LaneidxCombinator>;
 
 
@@ -6347,14 +6347,14 @@ pub closed spec fn spec_shuffle() -> SpecShuffleCombinator {
     SpecShuffleCombinator(RepeatN(spec_laneidx(), 16))
 }
 
-                
+
 pub fn shuffle() -> (o: ShuffleCombinator)
     ensures o@ == spec_shuffle(),
 {
     ShuffleCombinator(RepeatN(laneidx(), 16))
 }
 
-                
+
 
 pub enum SpecInstrWithFdRest {
     Variant0(SpecMemarg),
@@ -6466,7 +6466,7 @@ impl<'a> From<InstrWithFdRestInner<'a>> for InstrWithFdRest<'a> {
             Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(m))))))) => InstrWithFdRest::Variant7(m),
         }
     }
-    
+
 }
 
 
@@ -6505,13 +6505,13 @@ pub struct SpecInstrWithFdRestCombinator(SpecInstrWithFdRestCombinatorAlias);
 
 impl SpecCombinator for SpecInstrWithFdRestCombinator {
     type Type = SpecInstrWithFdRest;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrWithFdRestCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrWithFdRestCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6519,11 +6519,11 @@ impl SecureSpecCombinator for SpecInstrWithFdRestCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrWithFdRestCombinatorAlias = Mapped<OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecV128LaneCombinator>, OrdChoice<Cond<SpecV128ConstCombinator>, OrdChoice<Cond<SpecShuffleCombinator>, OrdChoice<Cond<SpecLaneidxCombinator>, Cond<SpecEmptyCombinator>>>>>>>>, InstrWithFdRestMapper<'static>>;
@@ -6536,19 +6536,19 @@ impl<'a> View for InstrWithFdRestCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrWithFdRestCombinator<'a> {
     type Type = InstrWithFdRest<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrWithFdRestCombinatorAlias<'a> = Mapped<OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<V128LaneCombinator>, OrdChoice<Cond<V128ConstCombinator>, OrdChoice<Cond<ShuffleCombinator>, OrdChoice<Cond<LaneidxCombinator>, Cond<EmptyCombinator>>>>>>>>, InstrWithFdRestMapper<'a>>;
 
 
@@ -6644,13 +6644,13 @@ pub struct SpecInstrWithFdCombinator(SpecInstrWithFdCombinatorAlias);
 
 impl SpecCombinator for SpecInstrWithFdCombinator {
     type Type = SpecInstrWithFd;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrWithFdCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrWithFdCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -6658,11 +6658,11 @@ impl SecureSpecCombinator for SpecInstrWithFdCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrWithFdCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, SpecInstrWithFdRestCombinator>, InstrWithFdMapper<'static>>;
@@ -6675,19 +6675,19 @@ impl<'a> View for InstrWithFdCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrWithFdCombinator<'a> {
     type Type = InstrWithFd<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrWithFdCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, InstrWithFdRestCombinator<'a>, InstrWithFdCont0<'a>>, InstrWithFdMapper<'a>>;
 
 
@@ -6703,7 +6703,7 @@ pub open spec fn spec_instr_with_fd_cont0(deps: u64) -> SpecInstrWithFdRestCombi
     let tag = deps;
     spec_instr_with_fd_rest(tag)
 }
-                
+
 pub fn instr_with_fd<'a>() -> (o: InstrWithFdCombinator<'a>)
     ensures o@ == spec_instr_with_fd(),
 {
@@ -6734,7 +6734,7 @@ impl<'a> Continuation<&u64> for InstrWithFdCont0<'a> {
         instr_with_fd_rest(tag)
     }
 }
-                
+
 
 pub enum SpecInstrRest {
     Unreachable(SpecEmpty),
@@ -7189,7 +7189,7 @@ impl<'a> From<InstrRestInner<'a>> for InstrRest<'a> {
             Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(m)))))))))))))))))))))))))))))))))))))))))))))))))))))))) => InstrRest::Unrecognized(m),
         }
     }
-    
+
 }
 
 
@@ -7228,13 +7228,13 @@ pub struct SpecInstrRestCombinator(SpecInstrRestCombinatorAlias);
 
 impl SpecCombinator for SpecInstrRestCombinator {
     type Type = SpecInstrRest;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrRestCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrRestCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7242,11 +7242,11 @@ impl SecureSpecCombinator for SpecInstrRestCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrRestCombinatorAlias = Mapped<OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecBlocktypeCombinator>, OrdChoice<Cond<SpecBlocktypeCombinator>, OrdChoice<Cond<SpecBlocktypeCombinator>, OrdChoice<Cond<SpecLabelidxCombinator>, OrdChoice<Cond<SpecLabelidxCombinator>, OrdChoice<Cond<SpecBrTableCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecFuncidxCombinator>, OrdChoice<Cond<SpecCallIndirectCombinator>, OrdChoice<Cond<SpecReftypeCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecFuncidxCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecEmptyCombinator>, OrdChoice<Cond<SpecSelectTCombinator>, OrdChoice<Cond<SpecLocalidxCombinator>, OrdChoice<Cond<SpecLocalidxCombinator>, OrdChoice<Cond<SpecLocalidxCombinator>, OrdChoice<Cond<SpecGlobalidxCombinator>, OrdChoice<Cond<SpecGlobalidxCombinator>, OrdChoice<Cond<SpecTableidxCombinator>, OrdChoice<Cond<SpecTableidxCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecMemargCombinator>, OrdChoice<Cond<SpecByteZeroCombinator>, OrdChoice<Cond<SpecByteZeroCombinator>, OrdChoice<Cond<UnsignedLEB128>, OrdChoice<Cond<UnsignedLEB128>, OrdChoice<Cond<SpecF32Combinator>, OrdChoice<Cond<SpecF64Combinator>, OrdChoice<Cond<SpecInstrWithFcCombinator>, OrdChoice<Cond<SpecInstrWithFdCombinator>, Cond<SpecEmptyCombinator>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>, InstrRestMapper<'static>>;
@@ -7259,19 +7259,19 @@ impl<'a> View for InstrRestCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrRestCombinator<'a> {
     type Type = InstrRest<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrRestCombinatorAlias<'a> = Mapped<OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<BlocktypeCombinator<'a>>, OrdChoice<Cond<BlocktypeCombinator<'a>>, OrdChoice<Cond<BlocktypeCombinator<'a>>, OrdChoice<Cond<LabelidxCombinator>, OrdChoice<Cond<LabelidxCombinator>, OrdChoice<Cond<BrTableCombinator<'a>>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<FuncidxCombinator>, OrdChoice<Cond<CallIndirectCombinator>, OrdChoice<Cond<ReftypeCombinator>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<FuncidxCombinator>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<EmptyCombinator>, OrdChoice<Cond<SelectTCombinator<'a>>, OrdChoice<Cond<LocalidxCombinator>, OrdChoice<Cond<LocalidxCombinator>, OrdChoice<Cond<LocalidxCombinator>, OrdChoice<Cond<GlobalidxCombinator>, OrdChoice<Cond<GlobalidxCombinator>, OrdChoice<Cond<TableidxCombinator>, OrdChoice<Cond<TableidxCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<MemargCombinator>, OrdChoice<Cond<ByteZeroCombinator>, OrdChoice<Cond<ByteZeroCombinator>, OrdChoice<Cond<UnsignedLEB128>, OrdChoice<Cond<UnsignedLEB128>, OrdChoice<Cond<F32Combinator>, OrdChoice<Cond<F64Combinator>, OrdChoice<Cond<InstrWithFcCombinator<'a>>, OrdChoice<Cond<InstrWithFdCombinator<'a>>, Cond<EmptyCombinator>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>, InstrRestMapper<'a>>;
 
 
@@ -7367,13 +7367,13 @@ pub struct SpecInstrCombinator(SpecInstrCombinatorAlias);
 
 impl SpecCombinator for SpecInstrCombinator {
     type Type = SpecInstr;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecInstrCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecInstrCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7381,11 +7381,11 @@ impl SecureSpecCombinator for SpecInstrCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecInstrCombinatorAlias = Mapped<SpecDepend<SpecInstrBytecodeCombinator, SpecInstrRestCombinator>, InstrMapper<'static>>;
@@ -7398,19 +7398,19 @@ impl<'a> View for InstrCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for InstrCombinator<'a> {
     type Type = Instr<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type InstrCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, InstrBytecodeCombinator, InstrRestCombinator<'a>, InstrCont0<'a>>, InstrMapper<'a>>;
 
 
@@ -7426,7 +7426,7 @@ pub open spec fn spec_instr_cont0(deps: SpecInstrBytecode) -> SpecInstrRestCombi
     let opcode = deps;
     spec_instr_rest(opcode)
 }
-                
+
 pub fn instr<'a>() -> (o: InstrCombinator<'a>)
     ensures o@ == spec_instr(),
 {
@@ -7457,7 +7457,7 @@ impl<'a> Continuation<&InstrBytecode> for InstrCont0<'a> {
         instr_rest(opcode)
     }
 }
-                
+
 
 pub struct SpecExprInner {
     pub l: u64,
@@ -7540,13 +7540,13 @@ pub struct SpecExprInnerCombinator(SpecExprInnerCombinatorAlias);
 
 impl SpecCombinator for SpecExprInnerCombinator {
     type Type = SpecExprInner;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExprInnerCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExprInnerCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7554,11 +7554,11 @@ impl SecureSpecCombinator for SpecExprInnerCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExprInnerCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecInstrCombinator>>, ExprInnerMapper<'static>>;
@@ -7571,19 +7571,19 @@ impl<'a> View for ExprInnerCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExprInnerCombinator<'a> {
     type Type = ExprInner<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExprInnerCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<InstrCombinator<'a>>, ExprInnerCont0<'a>>, ExprInnerMapper<'a>>;
 
 
@@ -7599,7 +7599,7 @@ pub open spec fn spec_expr_inner_cont0(deps: u64) -> RepeatN<SpecInstrCombinator
     let l = deps;
     RepeatN(spec_instr(), l.spec_into())
 }
-                
+
 pub fn expr_inner<'a>() -> (o: ExprInnerCombinator<'a>)
     ensures o@ == spec_expr_inner(),
 {
@@ -7630,7 +7630,7 @@ impl<'a> Continuation<&u64> for ExprInnerCont0<'a> {
         RepeatN(instr(), l.ex_into())
     }
 }
-                
+
 pub type SpecExpr = SpecExprInner;
 pub type Expr<'a> = ExprInner<'a>;
 
@@ -7641,13 +7641,13 @@ pub struct SpecExprCombinator(SpecExprCombinatorAlias);
 
 impl SpecCombinator for SpecExprCombinator {
     type Type = SpecExpr;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExprCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExprCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7655,11 +7655,11 @@ impl SecureSpecCombinator for SpecExprCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExprCombinatorAlias = Terminated<SpecExprInnerCombinator, Tag<U8, u8>>;
@@ -7673,19 +7673,19 @@ impl<'a> View for ExprCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExprCombinator<'a> {
     type Type = Expr<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExprCombinatorAlias<'a> = Terminated<ExprInnerCombinator<'a>, Tag<U8, u8>>;
 
 
@@ -7693,14 +7693,14 @@ pub closed spec fn spec_expr() -> SpecExprCombinator {
     SpecExprCombinator(Terminated(spec_expr_inner(), Tag::spec_new(U8, Expr_0_BACK_CONST)))
 }
 
-                
+
 pub fn expr<'a>() -> (o: ExprCombinator<'a>)
     ensures o@ == spec_expr(),
 {
     ExprCombinator(Terminated(expr_inner(), Tag::new(U8, Expr_0_BACK_CONST)))
 }
 
-                
+
 
 pub struct SpecByteVec {
     pub l: u64,
@@ -7783,13 +7783,13 @@ pub struct SpecByteVecCombinator(SpecByteVecCombinatorAlias);
 
 impl SpecCombinator for SpecByteVecCombinator {
     type Type = SpecByteVec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecByteVecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecByteVecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7797,11 +7797,11 @@ impl SecureSpecCombinator for SpecByteVecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecByteVecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<U8>>, ByteVecMapper>;
@@ -7814,19 +7814,19 @@ impl<'a> View for ByteVecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ByteVecCombinator<'a> {
     type Type = ByteVec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ByteVecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<U8>, ByteVecCont0<'a>>, ByteVecMapper>;
 
 
@@ -7842,7 +7842,7 @@ pub open spec fn spec_byte_vec_cont0(deps: u64) -> RepeatN<U8> {
     let l = deps;
     RepeatN(U8, l.spec_into())
 }
-                
+
 pub fn byte_vec<'a>() -> (o: ByteVecCombinator<'a>)
     ensures o@ == spec_byte_vec(),
 {
@@ -7873,7 +7873,7 @@ impl<'a> Continuation<&u64> for ByteVecCont0<'a> {
         RepeatN(U8, l.ex_into())
     }
 }
-                
+
 
 pub struct SpecActiveDatax {
     pub memory: SpecMemidx,
@@ -7959,13 +7959,13 @@ pub struct SpecActiveDataxCombinator(SpecActiveDataxCombinatorAlias);
 
 impl SpecCombinator for SpecActiveDataxCombinator {
     type Type = SpecActiveDatax;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecActiveDataxCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecActiveDataxCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -7973,11 +7973,11 @@ impl SecureSpecCombinator for SpecActiveDataxCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecActiveDataxCombinatorAlias = Mapped<(SpecMemidxCombinator, (SpecExprCombinator, SpecByteVecCombinator)), ActiveDataxMapper<'static>>;
@@ -7990,19 +7990,19 @@ impl<'a> View for ActiveDataxCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ActiveDataxCombinator<'a> {
     type Type = ActiveDatax<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ActiveDataxCombinatorAlias<'a> = Mapped<(MemidxCombinator, (ExprCombinator<'a>, ByteVecCombinator<'a>)), ActiveDataxMapper<'a>>;
 
 
@@ -8014,7 +8014,7 @@ pub closed spec fn spec_active_datax() -> SpecActiveDataxCombinator {
     })
 }
 
-                
+
 pub fn active_datax<'a>() -> (o: ActiveDataxCombinator<'a>)
     ensures o@ == spec_active_datax(),
 {
@@ -8025,7 +8025,7 @@ pub fn active_datax<'a>() -> (o: ActiveDataxCombinator<'a>)
     })
 }
 
-                
+
 pub type SpecPassiveData = SpecByteVec;
 pub type PassiveData = ByteVec;
 
@@ -8034,13 +8034,13 @@ pub struct SpecPassiveDataCombinator(SpecPassiveDataCombinatorAlias);
 
 impl SpecCombinator for SpecPassiveDataCombinator {
     type Type = SpecPassiveData;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecPassiveDataCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecPassiveDataCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8048,11 +8048,11 @@ impl SecureSpecCombinator for SpecPassiveDataCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecPassiveDataCombinatorAlias = SpecByteVecCombinator;
@@ -8065,19 +8065,19 @@ impl<'a> View for PassiveDataCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for PassiveDataCombinator<'a> {
     type Type = PassiveData;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type PassiveDataCombinatorAlias<'a> = ByteVecCombinator<'a>;
 
 
@@ -8085,14 +8085,14 @@ pub closed spec fn spec_passive_data() -> SpecPassiveDataCombinator {
     SpecPassiveDataCombinator(spec_byte_vec())
 }
 
-                
+
 pub fn passive_data<'a>() -> (o: PassiveDataCombinator<'a>)
     ensures o@ == spec_passive_data(),
 {
     PassiveDataCombinator(byte_vec())
 }
 
-                
+
 
 pub struct SpecExprs {
     pub l: u64,
@@ -8175,13 +8175,13 @@ pub struct SpecExprsCombinator(SpecExprsCombinatorAlias);
 
 impl SpecCombinator for SpecExprsCombinator {
     type Type = SpecExprs;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExprsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExprsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8189,11 +8189,11 @@ impl SecureSpecCombinator for SpecExprsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExprsCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecExprCombinator>>, ExprsMapper<'static>>;
@@ -8206,19 +8206,19 @@ impl<'a> View for ExprsCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExprsCombinator<'a> {
     type Type = Exprs<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExprsCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ExprCombinator<'a>>, ExprsCont0<'a>>, ExprsMapper<'a>>;
 
 
@@ -8234,7 +8234,7 @@ pub open spec fn spec_exprs_cont0(deps: u64) -> RepeatN<SpecExprCombinator> {
     let l = deps;
     RepeatN(spec_expr(), l.spec_into())
 }
-                
+
 pub fn exprs<'a>() -> (o: ExprsCombinator<'a>)
     ensures o@ == spec_exprs(),
 {
@@ -8265,7 +8265,7 @@ impl<'a> Continuation<&u64> for ExprsCont0<'a> {
         RepeatN(expr(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecParsedElem4 {
     pub offset: SpecExpr,
@@ -8348,13 +8348,13 @@ pub struct SpecParsedElem4Combinator(SpecParsedElem4CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem4Combinator {
     type Type = SpecParsedElem4;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem4Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem4CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8362,11 +8362,11 @@ impl SecureSpecCombinator for SpecParsedElem4Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem4CombinatorAlias = Mapped<(SpecExprCombinator, SpecExprsCombinator), ParsedElem4Mapper<'static>>;
@@ -8379,19 +8379,19 @@ impl<'a> View for ParsedElem4Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem4Combinator<'a> {
     type Type = ParsedElem4<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem4CombinatorAlias<'a> = Mapped<(ExprCombinator<'a>, ExprsCombinator<'a>), ParsedElem4Mapper<'a>>;
 
 
@@ -8403,7 +8403,7 @@ pub closed spec fn spec_parsed_elem4() -> SpecParsedElem4Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem4<'a>() -> (o: ParsedElem4Combinator<'a>)
     ensures o@ == spec_parsed_elem4(),
 {
@@ -8414,7 +8414,7 @@ pub fn parsed_elem4<'a>() -> (o: ParsedElem4Combinator<'a>)
     })
 }
 
-                
+
 pub type SpecName = SpecByteVec;
 pub type Name = ByteVec;
 
@@ -8423,13 +8423,13 @@ pub struct SpecNameCombinator(SpecNameCombinatorAlias);
 
 impl SpecCombinator for SpecNameCombinator {
     type Type = SpecName;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecNameCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecNameCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8437,11 +8437,11 @@ impl SecureSpecCombinator for SpecNameCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecNameCombinatorAlias = SpecByteVecCombinator;
@@ -8454,19 +8454,19 @@ impl<'a> View for NameCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for NameCombinator<'a> {
     type Type = Name;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type NameCombinatorAlias<'a> = ByteVecCombinator<'a>;
 
 
@@ -8474,14 +8474,14 @@ pub closed spec fn spec_name() -> SpecNameCombinator {
     SpecNameCombinator(spec_byte_vec())
 }
 
-                
+
 pub fn name<'a>() -> (o: NameCombinator<'a>)
     ensures o@ == spec_name(),
 {
     NameCombinator(byte_vec())
 }
 
-                
+
 
 pub struct SpecImport {
     pub module: SpecName,
@@ -8567,13 +8567,13 @@ pub struct SpecImportCombinator(SpecImportCombinatorAlias);
 
 impl SpecCombinator for SpecImportCombinator {
     type Type = SpecImport;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecImportCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecImportCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8581,11 +8581,11 @@ impl SecureSpecCombinator for SpecImportCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecImportCombinatorAlias = Mapped<(SpecNameCombinator, (SpecNameCombinator, SpecImportdescCombinator)), ImportMapper>;
@@ -8598,19 +8598,19 @@ impl<'a> View for ImportCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ImportCombinator<'a> {
     type Type = Import;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ImportCombinatorAlias<'a> = Mapped<(NameCombinator<'a>, (NameCombinator<'a>, ImportdescCombinator)), ImportMapper>;
 
 
@@ -8622,7 +8622,7 @@ pub closed spec fn spec_import() -> SpecImportCombinator {
     })
 }
 
-                
+
 pub fn import<'a>() -> (o: ImportCombinator<'a>)
     ensures o@ == spec_import(),
 {
@@ -8633,7 +8633,7 @@ pub fn import<'a>() -> (o: ImportCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecImports {
     pub l: u64,
@@ -8716,13 +8716,13 @@ pub struct SpecImportsCombinator(SpecImportsCombinatorAlias);
 
 impl SpecCombinator for SpecImportsCombinator {
     type Type = SpecImports;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecImportsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecImportsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8730,11 +8730,11 @@ impl SecureSpecCombinator for SpecImportsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecImportsCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecImportCombinator>>, ImportsMapper>;
@@ -8747,19 +8747,19 @@ impl<'a> View for ImportsCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ImportsCombinator<'a> {
     type Type = Imports;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ImportsCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ImportCombinator<'a>>, ImportsCont0<'a>>, ImportsMapper>;
 
 
@@ -8775,7 +8775,7 @@ pub open spec fn spec_imports_cont0(deps: u64) -> RepeatN<SpecImportCombinator> 
     let l = deps;
     RepeatN(spec_import(), l.spec_into())
 }
-                
+
 pub fn imports<'a>() -> (o: ImportsCombinator<'a>)
     ensures o@ == spec_imports(),
 {
@@ -8806,7 +8806,7 @@ impl<'a> Continuation<&u64> for ImportsCont0<'a> {
         RepeatN(import(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecImportsec {
     pub size: u64,
@@ -8889,13 +8889,13 @@ pub struct SpecImportsecCombinator(SpecImportsecCombinatorAlias);
 
 impl SpecCombinator for SpecImportsecCombinator {
     type Type = SpecImportsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecImportsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecImportsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -8903,11 +8903,11 @@ impl SecureSpecCombinator for SpecImportsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecImportsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecImportsCombinator>>, ImportsecMapper>;
@@ -8920,19 +8920,19 @@ impl<'a> View for ImportsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ImportsecCombinator<'a> {
     type Type = Importsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ImportsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, ImportsCombinator<'a>>, ImportsecCont0<'a>>, ImportsecMapper>;
 
 
@@ -8948,7 +8948,7 @@ pub open spec fn spec_importsec_cont0(deps: u64) -> AndThen<Bytes, SpecImportsCo
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_imports())
 }
-                
+
 pub fn importsec<'a>() -> (o: ImportsecCombinator<'a>)
     ensures o@ == spec_importsec(),
 {
@@ -8979,7 +8979,7 @@ impl<'a> Continuation<&u64> for ImportsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), imports())
     }
 }
-                
+
 
 pub struct SpecFuncsec {
     pub size: u64,
@@ -9062,13 +9062,13 @@ pub struct SpecFuncsecCombinator(SpecFuncsecCombinatorAlias);
 
 impl SpecCombinator for SpecFuncsecCombinator {
     type Type = SpecFuncsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFuncsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFuncsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9076,11 +9076,11 @@ impl SecureSpecCombinator for SpecFuncsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFuncsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecFuncsecContentCombinator>>, FuncsecMapper>;
@@ -9093,19 +9093,19 @@ impl<'a> View for FuncsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FuncsecCombinator<'a> {
     type Type = Funcsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FuncsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, FuncsecContentCombinator<'a>>, FuncsecCont0<'a>>, FuncsecMapper>;
 
 
@@ -9121,7 +9121,7 @@ pub open spec fn spec_funcsec_cont0(deps: u64) -> AndThen<Bytes, SpecFuncsecCont
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_funcsec_content())
 }
-                
+
 pub fn funcsec<'a>() -> (o: FuncsecCombinator<'a>)
     ensures o@ == spec_funcsec(),
 {
@@ -9152,7 +9152,7 @@ impl<'a> Continuation<&u64> for FuncsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), funcsec_content())
     }
 }
-                
+
 
 pub struct SpecActiveData0 {
     pub offset: SpecExpr,
@@ -9235,13 +9235,13 @@ pub struct SpecActiveData0Combinator(SpecActiveData0CombinatorAlias);
 
 impl SpecCombinator for SpecActiveData0Combinator {
     type Type = SpecActiveData0;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecActiveData0Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecActiveData0CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9249,11 +9249,11 @@ impl SecureSpecCombinator for SpecActiveData0Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecActiveData0CombinatorAlias = Mapped<(SpecExprCombinator, SpecByteVecCombinator), ActiveData0Mapper<'static>>;
@@ -9266,19 +9266,19 @@ impl<'a> View for ActiveData0Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ActiveData0Combinator<'a> {
     type Type = ActiveData0<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ActiveData0CombinatorAlias<'a> = Mapped<(ExprCombinator<'a>, ByteVecCombinator<'a>), ActiveData0Mapper<'a>>;
 
 
@@ -9290,7 +9290,7 @@ pub closed spec fn spec_active_data0() -> SpecActiveData0Combinator {
     })
 }
 
-                
+
 pub fn active_data0<'a>() -> (o: ActiveData0Combinator<'a>)
     ensures o@ == spec_active_data0(),
 {
@@ -9301,7 +9301,7 @@ pub fn active_data0<'a>() -> (o: ActiveData0Combinator<'a>)
     })
 }
 
-                
+
 
 pub enum SpecData {
     ActiveData0(SpecActiveData0),
@@ -9378,7 +9378,7 @@ impl<'a> From<DataInner<'a>> for Data<'a> {
             Either::Right(Either::Right(m)) => Data::ActiveDataX(m),
         }
     }
-    
+
 }
 
 
@@ -9423,13 +9423,13 @@ pub struct SpecDataCombinator(SpecDataCombinatorAlias);
 
 impl SpecCombinator for SpecDataCombinator {
     type Type = SpecData;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDataCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDataCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9437,11 +9437,11 @@ impl SecureSpecCombinator for SpecDataCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDataCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecActiveData0Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecPassiveDataCombinator>, Preceded<Tag<UnsignedLEB128, u64>, SpecActiveDataxCombinator>>>, DataMapper<'static>>;
@@ -9457,19 +9457,19 @@ impl<'a> View for DataCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DataCombinator<'a> {
     type Type = Data<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DataCombinatorAlias<'a> = Mapped<OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ActiveData0Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, PassiveDataCombinator<'a>>, Preceded<Tag<UnsignedLEB128, u64>, ActiveDataxCombinator<'a>>>>, DataMapper<'a>>;
 
 
@@ -9477,14 +9477,14 @@ pub closed spec fn spec_data() -> SpecDataCombinator {
     SpecDataCombinator(Mapped { inner: OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, DATAACTIVEDATA0_0_FRONT_CONST), spec_active_data0()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, DATAPASSIVEDATA_0_FRONT_CONST), spec_passive_data()), Preceded(Tag::spec_new(UnsignedLEB128, DATAACTIVEDATAX_0_FRONT_CONST), spec_active_datax()))), mapper: DataMapper::spec_new() })
 }
 
-                
+
 pub fn data<'a>() -> (o: DataCombinator<'a>)
     ensures o@ == spec_data(),
 {
     DataCombinator(Mapped { inner: OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, DATAACTIVEDATA0_0_FRONT_CONST), active_data0()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, DATAPASSIVEDATA_0_FRONT_CONST), passive_data()), Preceded(Tag::new(UnsignedLEB128, DATAACTIVEDATAX_0_FRONT_CONST), active_datax()))), mapper: DataMapper::new() })
 }
 
-                
+
 
 pub struct SpecMem {
     pub ty: SpecMemtype,
@@ -9564,13 +9564,13 @@ pub struct SpecMemCombinator(SpecMemCombinatorAlias);
 
 impl SpecCombinator for SpecMemCombinator {
     type Type = SpecMem;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9578,11 +9578,11 @@ impl SecureSpecCombinator for SpecMemCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemCombinatorAlias = Mapped<SpecMemtypeCombinator, MemMapper>;
@@ -9595,19 +9595,19 @@ impl View for MemCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemCombinator {
     type Type = Mem;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemCombinatorAlias = Mapped<MemtypeCombinator, MemMapper>;
 
 
@@ -9619,7 +9619,7 @@ pub closed spec fn spec_mem() -> SpecMemCombinator {
     })
 }
 
-                
+
 pub fn mem() -> (o: MemCombinator)
     ensures o@ == spec_mem(),
 {
@@ -9630,7 +9630,7 @@ pub fn mem() -> (o: MemCombinator)
     })
 }
 
-                
+
 
 pub struct SpecFuncidxs {
     pub l: u64,
@@ -9713,13 +9713,13 @@ pub struct SpecFuncidxsCombinator(SpecFuncidxsCombinatorAlias);
 
 impl SpecCombinator for SpecFuncidxsCombinator {
     type Type = SpecFuncidxs;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFuncidxsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFuncidxsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9727,11 +9727,11 @@ impl SecureSpecCombinator for SpecFuncidxsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFuncidxsCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecFuncidxCombinator>>, FuncidxsMapper>;
@@ -9744,19 +9744,19 @@ impl<'a> View for FuncidxsCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FuncidxsCombinator<'a> {
     type Type = Funcidxs;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FuncidxsCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<FuncidxCombinator>, FuncidxsCont0<'a>>, FuncidxsMapper>;
 
 
@@ -9772,7 +9772,7 @@ pub open spec fn spec_funcidxs_cont0(deps: u64) -> RepeatN<SpecFuncidxCombinator
     let l = deps;
     RepeatN(spec_funcidx(), l.spec_into())
 }
-                
+
 pub fn funcidxs<'a>() -> (o: FuncidxsCombinator<'a>)
     ensures o@ == spec_funcidxs(),
 {
@@ -9803,7 +9803,7 @@ impl<'a> Continuation<&u64> for FuncidxsCont0<'a> {
         RepeatN(funcidx(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecParsedElem0 {
     pub e: SpecExpr,
@@ -9886,13 +9886,13 @@ pub struct SpecParsedElem0Combinator(SpecParsedElem0CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem0Combinator {
     type Type = SpecParsedElem0;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem0Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem0CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -9900,11 +9900,11 @@ impl SecureSpecCombinator for SpecParsedElem0Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem0CombinatorAlias = Mapped<(SpecExprCombinator, SpecFuncidxsCombinator), ParsedElem0Mapper<'static>>;
@@ -9917,19 +9917,19 @@ impl<'a> View for ParsedElem0Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem0Combinator<'a> {
     type Type = ParsedElem0<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem0CombinatorAlias<'a> = Mapped<(ExprCombinator<'a>, FuncidxsCombinator<'a>), ParsedElem0Mapper<'a>>;
 
 
@@ -9941,7 +9941,7 @@ pub closed spec fn spec_parsed_elem0() -> SpecParsedElem0Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem0<'a>() -> (o: ParsedElem0Combinator<'a>)
     ensures o@ == spec_parsed_elem0(),
 {
@@ -9952,7 +9952,7 @@ pub fn parsed_elem0<'a>() -> (o: ParsedElem0Combinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecParsedElem1 {
     pub et: SpecELEMKIND,
@@ -10035,13 +10035,13 @@ pub struct SpecParsedElem1Combinator(SpecParsedElem1CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem1Combinator {
     type Type = SpecParsedElem1;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem1Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem1CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10049,11 +10049,11 @@ impl SecureSpecCombinator for SpecParsedElem1Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem1CombinatorAlias = Mapped<(SpecELEMKINDCombinator, SpecFuncidxsCombinator), ParsedElem1Mapper>;
@@ -10066,19 +10066,19 @@ impl<'a> View for ParsedElem1Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem1Combinator<'a> {
     type Type = ParsedElem1;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem1CombinatorAlias<'a> = Mapped<(ELEMKINDCombinator, FuncidxsCombinator<'a>), ParsedElem1Mapper>;
 
 
@@ -10090,7 +10090,7 @@ pub closed spec fn spec_parsed_elem1() -> SpecParsedElem1Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem1<'a>() -> (o: ParsedElem1Combinator<'a>)
     ensures o@ == spec_parsed_elem1(),
 {
@@ -10101,7 +10101,7 @@ pub fn parsed_elem1<'a>() -> (o: ParsedElem1Combinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecParsedElem2 {
     pub table: SpecTableidx,
@@ -10190,13 +10190,13 @@ pub struct SpecParsedElem2Combinator(SpecParsedElem2CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem2Combinator {
     type Type = SpecParsedElem2;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem2Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem2CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10204,11 +10204,11 @@ impl SecureSpecCombinator for SpecParsedElem2Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem2CombinatorAlias = Mapped<(SpecTableidxCombinator, (SpecExprCombinator, (SpecELEMKINDCombinator, SpecFuncidxsCombinator))), ParsedElem2Mapper<'static>>;
@@ -10221,19 +10221,19 @@ impl<'a> View for ParsedElem2Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem2Combinator<'a> {
     type Type = ParsedElem2<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem2CombinatorAlias<'a> = Mapped<(TableidxCombinator, (ExprCombinator<'a>, (ELEMKINDCombinator, FuncidxsCombinator<'a>))), ParsedElem2Mapper<'a>>;
 
 
@@ -10245,7 +10245,7 @@ pub closed spec fn spec_parsed_elem2() -> SpecParsedElem2Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem2<'a>() -> (o: ParsedElem2Combinator<'a>)
     ensures o@ == spec_parsed_elem2(),
 {
@@ -10256,7 +10256,7 @@ pub fn parsed_elem2<'a>() -> (o: ParsedElem2Combinator<'a>)
     })
 }
 
-                
+
 pub type SpecParsedElem3 = SpecParsedElem1;
 pub type ParsedElem3 = ParsedElem1;
 
@@ -10265,13 +10265,13 @@ pub struct SpecParsedElem3Combinator(SpecParsedElem3CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem3Combinator {
     type Type = SpecParsedElem3;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem3Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem3CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10279,11 +10279,11 @@ impl SecureSpecCombinator for SpecParsedElem3Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem3CombinatorAlias = SpecParsedElem1Combinator;
@@ -10296,19 +10296,19 @@ impl<'a> View for ParsedElem3Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem3Combinator<'a> {
     type Type = ParsedElem3;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem3CombinatorAlias<'a> = ParsedElem1Combinator<'a>;
 
 
@@ -10316,14 +10316,14 @@ pub closed spec fn spec_parsed_elem3() -> SpecParsedElem3Combinator {
     SpecParsedElem3Combinator(spec_parsed_elem1())
 }
 
-                
+
 pub fn parsed_elem3<'a>() -> (o: ParsedElem3Combinator<'a>)
     ensures o@ == spec_parsed_elem3(),
 {
     ParsedElem3Combinator(parsed_elem1())
 }
 
-                
+
 
 pub struct SpecParsedElem5 {
     pub et: SpecReftype,
@@ -10406,13 +10406,13 @@ pub struct SpecParsedElem5Combinator(SpecParsedElem5CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem5Combinator {
     type Type = SpecParsedElem5;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem5Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem5CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10420,11 +10420,11 @@ impl SecureSpecCombinator for SpecParsedElem5Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem5CombinatorAlias = Mapped<(SpecReftypeCombinator, SpecExprsCombinator), ParsedElem5Mapper<'static>>;
@@ -10437,19 +10437,19 @@ impl<'a> View for ParsedElem5Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem5Combinator<'a> {
     type Type = ParsedElem5<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem5CombinatorAlias<'a> = Mapped<(ReftypeCombinator, ExprsCombinator<'a>), ParsedElem5Mapper<'a>>;
 
 
@@ -10461,7 +10461,7 @@ pub closed spec fn spec_parsed_elem5() -> SpecParsedElem5Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem5<'a>() -> (o: ParsedElem5Combinator<'a>)
     ensures o@ == spec_parsed_elem5(),
 {
@@ -10472,7 +10472,7 @@ pub fn parsed_elem5<'a>() -> (o: ParsedElem5Combinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecParsedElem6 {
     pub table: SpecTableidx,
@@ -10561,13 +10561,13 @@ pub struct SpecParsedElem6Combinator(SpecParsedElem6CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem6Combinator {
     type Type = SpecParsedElem6;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem6Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem6CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10575,11 +10575,11 @@ impl SecureSpecCombinator for SpecParsedElem6Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem6CombinatorAlias = Mapped<(SpecTableidxCombinator, (SpecExprCombinator, (SpecReftypeCombinator, SpecExprsCombinator))), ParsedElem6Mapper<'static>>;
@@ -10592,19 +10592,19 @@ impl<'a> View for ParsedElem6Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem6Combinator<'a> {
     type Type = ParsedElem6<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem6CombinatorAlias<'a> = Mapped<(TableidxCombinator, (ExprCombinator<'a>, (ReftypeCombinator, ExprsCombinator<'a>))), ParsedElem6Mapper<'a>>;
 
 
@@ -10616,7 +10616,7 @@ pub closed spec fn spec_parsed_elem6() -> SpecParsedElem6Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem6<'a>() -> (o: ParsedElem6Combinator<'a>)
     ensures o@ == spec_parsed_elem6(),
 {
@@ -10627,7 +10627,7 @@ pub fn parsed_elem6<'a>() -> (o: ParsedElem6Combinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecParsedElem7 {
     pub et: SpecReftype,
@@ -10710,13 +10710,13 @@ pub struct SpecParsedElem7Combinator(SpecParsedElem7CombinatorAlias);
 
 impl SpecCombinator for SpecParsedElem7Combinator {
     type Type = SpecParsedElem7;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecParsedElem7Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecParsedElem7CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10724,11 +10724,11 @@ impl SecureSpecCombinator for SpecParsedElem7Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecParsedElem7CombinatorAlias = Mapped<(SpecReftypeCombinator, SpecExprsCombinator), ParsedElem7Mapper<'static>>;
@@ -10741,19 +10741,19 @@ impl<'a> View for ParsedElem7Combinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ParsedElem7Combinator<'a> {
     type Type = ParsedElem7<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ParsedElem7CombinatorAlias<'a> = Mapped<(ReftypeCombinator, ExprsCombinator<'a>), ParsedElem7Mapper<'a>>;
 
 
@@ -10765,7 +10765,7 @@ pub closed spec fn spec_parsed_elem7() -> SpecParsedElem7Combinator {
     })
 }
 
-                
+
 pub fn parsed_elem7<'a>() -> (o: ParsedElem7Combinator<'a>)
     ensures o@ == spec_parsed_elem7(),
 {
@@ -10776,7 +10776,7 @@ pub fn parsed_elem7<'a>() -> (o: ParsedElem7Combinator<'a>)
     })
 }
 
-                
+
 
 pub enum SpecElem {
     Elem0(SpecParsedElem0),
@@ -10888,7 +10888,7 @@ impl<'a> From<ElemInner<'a>> for Elem<'a> {
             Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(Either::Right(m))))))) => Elem::Elem7(m),
         }
     }
-    
+
 }
 
 
@@ -10943,13 +10943,13 @@ pub struct SpecElemCombinator(SpecElemCombinatorAlias);
 
 impl SpecCombinator for SpecElemCombinator {
     type Type = SpecElem;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecElemCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecElemCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -10957,11 +10957,11 @@ impl SecureSpecCombinator for SpecElemCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecElemCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem0Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem1Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem2Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem3Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem4Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem5Combinator>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem6Combinator>, Preceded<Tag<UnsignedLEB128, u64>, SpecParsedElem7Combinator>>>>>>>>, ElemMapper<'static>>;
@@ -10982,19 +10982,19 @@ impl<'a> View for ElemCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ElemCombinator<'a> {
     type Type = Elem<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ElemCombinatorAlias<'a> = Mapped<OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem0Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem1Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem2Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem3Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem4Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem5Combinator<'a>>, OrdChoice<Preceded<Tag<UnsignedLEB128, u64>, ParsedElem6Combinator<'a>>, Preceded<Tag<UnsignedLEB128, u64>, ParsedElem7Combinator<'a>>>>>>>>>, ElemMapper<'a>>;
 
 
@@ -11002,14 +11002,14 @@ pub closed spec fn spec_elem() -> SpecElemCombinator {
     SpecElemCombinator(Mapped { inner: OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM0_0_FRONT_CONST), spec_parsed_elem0()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM1_0_FRONT_CONST), spec_parsed_elem1()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM2_0_FRONT_CONST), spec_parsed_elem2()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM3_0_FRONT_CONST), spec_parsed_elem3()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM4_0_FRONT_CONST), spec_parsed_elem4()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM5_0_FRONT_CONST), spec_parsed_elem5()), OrdChoice(Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM6_0_FRONT_CONST), spec_parsed_elem6()), Preceded(Tag::spec_new(UnsignedLEB128, ELEMELEM7_0_FRONT_CONST), spec_parsed_elem7())))))))), mapper: ElemMapper::spec_new() })
 }
 
-                
+
 pub fn elem<'a>() -> (o: ElemCombinator<'a>)
     ensures o@ == spec_elem(),
 {
     ElemCombinator(Mapped { inner: OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM0_0_FRONT_CONST), parsed_elem0()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM1_0_FRONT_CONST), parsed_elem1()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM2_0_FRONT_CONST), parsed_elem2()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM3_0_FRONT_CONST), parsed_elem3()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM4_0_FRONT_CONST), parsed_elem4()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM5_0_FRONT_CONST), parsed_elem5()), OrdChoice::new(Preceded(Tag::new(UnsignedLEB128, ELEMELEM6_0_FRONT_CONST), parsed_elem6()), Preceded(Tag::new(UnsignedLEB128, ELEMELEM7_0_FRONT_CONST), parsed_elem7())))))))), mapper: ElemMapper::new() })
 }
 
-                
+
 
 pub struct SpecElemsecContent {
     pub l: u64,
@@ -11092,13 +11092,13 @@ pub struct SpecElemsecContentCombinator(SpecElemsecContentCombinatorAlias);
 
 impl SpecCombinator for SpecElemsecContentCombinator {
     type Type = SpecElemsecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecElemsecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecElemsecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11106,11 +11106,11 @@ impl SecureSpecCombinator for SpecElemsecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecElemsecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecElemCombinator>>, ElemsecContentMapper<'static>>;
@@ -11123,19 +11123,19 @@ impl<'a> View for ElemsecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ElemsecContentCombinator<'a> {
     type Type = ElemsecContent<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ElemsecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ElemCombinator<'a>>, ElemsecContentCont0<'a>>, ElemsecContentMapper<'a>>;
 
 
@@ -11151,7 +11151,7 @@ pub open spec fn spec_elemsec_content_cont0(deps: u64) -> RepeatN<SpecElemCombin
     let l = deps;
     RepeatN(spec_elem(), l.spec_into())
 }
-                
+
 pub fn elemsec_content<'a>() -> (o: ElemsecContentCombinator<'a>)
     ensures o@ == spec_elemsec_content(),
 {
@@ -11182,7 +11182,7 @@ impl<'a> Continuation<&u64> for ElemsecContentCont0<'a> {
         RepeatN(elem(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecGlobal {
     pub gt: SpecGlobaltype,
@@ -11265,13 +11265,13 @@ pub struct SpecGlobalCombinator(SpecGlobalCombinatorAlias);
 
 impl SpecCombinator for SpecGlobalCombinator {
     type Type = SpecGlobal;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecGlobalCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecGlobalCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11279,11 +11279,11 @@ impl SecureSpecCombinator for SpecGlobalCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecGlobalCombinatorAlias = Mapped<(SpecGlobaltypeCombinator, SpecExprCombinator), GlobalMapper<'static>>;
@@ -11296,19 +11296,19 @@ impl<'a> View for GlobalCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for GlobalCombinator<'a> {
     type Type = Global<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type GlobalCombinatorAlias<'a> = Mapped<(GlobaltypeCombinator, ExprCombinator<'a>), GlobalMapper<'a>>;
 
 
@@ -11320,7 +11320,7 @@ pub closed spec fn spec_global() -> SpecGlobalCombinator {
     })
 }
 
-                
+
 pub fn global<'a>() -> (o: GlobalCombinator<'a>)
     ensures o@ == spec_global(),
 {
@@ -11331,7 +11331,7 @@ pub fn global<'a>() -> (o: GlobalCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecLocalCompressed {
     pub count: u64,
@@ -11414,13 +11414,13 @@ pub struct SpecLocalCompressedCombinator(SpecLocalCompressedCombinatorAlias);
 
 impl SpecCombinator for SpecLocalCompressedCombinator {
     type Type = SpecLocalCompressed;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLocalCompressedCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLocalCompressedCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11428,11 +11428,11 @@ impl SecureSpecCombinator for SpecLocalCompressedCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLocalCompressedCombinatorAlias = Mapped<(UnsignedLEB128, SpecValtypeCombinator), LocalCompressedMapper>;
@@ -11445,19 +11445,19 @@ impl View for LocalCompressedCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LocalCompressedCombinator {
     type Type = LocalCompressed;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LocalCompressedCombinatorAlias = Mapped<(UnsignedLEB128, ValtypeCombinator), LocalCompressedMapper>;
 
 
@@ -11469,7 +11469,7 @@ pub closed spec fn spec_local_compressed() -> SpecLocalCompressedCombinator {
     })
 }
 
-                
+
 pub fn local_compressed() -> (o: LocalCompressedCombinator)
     ensures o@ == spec_local_compressed(),
 {
@@ -11480,7 +11480,7 @@ pub fn local_compressed() -> (o: LocalCompressedCombinator)
     })
 }
 
-                
+
 
 pub struct SpecLocals {
     pub l: u64,
@@ -11563,13 +11563,13 @@ pub struct SpecLocalsCombinator(SpecLocalsCombinatorAlias);
 
 impl SpecCombinator for SpecLocalsCombinator {
     type Type = SpecLocals;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecLocalsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecLocalsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11577,11 +11577,11 @@ impl SecureSpecCombinator for SpecLocalsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecLocalsCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecLocalCompressedCombinator>>, LocalsMapper>;
@@ -11594,19 +11594,19 @@ impl<'a> View for LocalsCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for LocalsCombinator<'a> {
     type Type = Locals;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type LocalsCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<LocalCompressedCombinator>, LocalsCont0<'a>>, LocalsMapper>;
 
 
@@ -11622,7 +11622,7 @@ pub open spec fn spec_locals_cont0(deps: u64) -> RepeatN<SpecLocalCompressedComb
     let l = deps;
     RepeatN(spec_local_compressed(), l.spec_into())
 }
-                
+
 pub fn locals<'a>() -> (o: LocalsCombinator<'a>)
     ensures o@ == spec_locals(),
 {
@@ -11653,7 +11653,7 @@ impl<'a> Continuation<&u64> for LocalsCont0<'a> {
         RepeatN(local_compressed(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecFunc {
     pub locals: SpecLocals,
@@ -11736,13 +11736,13 @@ pub struct SpecFuncCombinator(SpecFuncCombinatorAlias);
 
 impl SpecCombinator for SpecFuncCombinator {
     type Type = SpecFunc;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFuncCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFuncCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11750,11 +11750,11 @@ impl SecureSpecCombinator for SpecFuncCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFuncCombinatorAlias = Mapped<(SpecLocalsCombinator, SpecExprCombinator), FuncMapper<'static>>;
@@ -11767,19 +11767,19 @@ impl<'a> View for FuncCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FuncCombinator<'a> {
     type Type = Func<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FuncCombinatorAlias<'a> = Mapped<(LocalsCombinator<'a>, ExprCombinator<'a>), FuncMapper<'a>>;
 
 
@@ -11791,7 +11791,7 @@ pub closed spec fn spec_func() -> SpecFuncCombinator {
     })
 }
 
-                
+
 pub fn func<'a>() -> (o: FuncCombinator<'a>)
     ensures o@ == spec_func(),
 {
@@ -11802,7 +11802,7 @@ pub fn func<'a>() -> (o: FuncCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecCode {
     pub size: u64,
@@ -11885,13 +11885,13 @@ pub struct SpecCodeCombinator(SpecCodeCombinatorAlias);
 
 impl SpecCombinator for SpecCodeCombinator {
     type Type = SpecCode;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCodeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCodeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -11899,11 +11899,11 @@ impl SecureSpecCombinator for SpecCodeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCodeCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecFuncCombinator>>, CodeMapper<'static>>;
@@ -11916,19 +11916,19 @@ impl<'a> View for CodeCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CodeCombinator<'a> {
     type Type = Code<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CodeCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, FuncCombinator<'a>>, CodeCont0<'a>>, CodeMapper<'a>>;
 
 
@@ -11944,7 +11944,7 @@ pub open spec fn spec_code_cont0(deps: u64) -> AndThen<Bytes, SpecFuncCombinator
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_func())
 }
-                
+
 pub fn code<'a>() -> (o: CodeCombinator<'a>)
     ensures o@ == spec_code(),
 {
@@ -11975,7 +11975,7 @@ impl<'a> Continuation<&u64> for CodeCont0<'a> {
         AndThen(Bytes(size.ex_into()), func())
     }
 }
-                
+
 
 pub struct SpecCodesecContent {
     pub l: u64,
@@ -12058,13 +12058,13 @@ pub struct SpecCodesecContentCombinator(SpecCodesecContentCombinatorAlias);
 
 impl SpecCombinator for SpecCodesecContentCombinator {
     type Type = SpecCodesecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCodesecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCodesecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12072,11 +12072,11 @@ impl SecureSpecCombinator for SpecCodesecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCodesecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecCodeCombinator>>, CodesecContentMapper<'static>>;
@@ -12089,19 +12089,19 @@ impl<'a> View for CodesecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CodesecContentCombinator<'a> {
     type Type = CodesecContent<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CodesecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<CodeCombinator<'a>>, CodesecContentCont0<'a>>, CodesecContentMapper<'a>>;
 
 
@@ -12117,7 +12117,7 @@ pub open spec fn spec_codesec_content_cont0(deps: u64) -> RepeatN<SpecCodeCombin
     let l = deps;
     RepeatN(spec_code(), l.spec_into())
 }
-                
+
 pub fn codesec_content<'a>() -> (o: CodesecContentCombinator<'a>)
     ensures o@ == spec_codesec_content(),
 {
@@ -12148,7 +12148,7 @@ impl<'a> Continuation<&u64> for CodesecContentCont0<'a> {
         RepeatN(code(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecCodesec {
     pub size: u64,
@@ -12231,13 +12231,13 @@ pub struct SpecCodesecCombinator(SpecCodesecCombinatorAlias);
 
 impl SpecCombinator for SpecCodesecCombinator {
     type Type = SpecCodesec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCodesecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCodesecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12245,11 +12245,11 @@ impl SecureSpecCombinator for SpecCodesecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCodesecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecCodesecContentCombinator>>, CodesecMapper<'static>>;
@@ -12262,19 +12262,19 @@ impl<'a> View for CodesecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CodesecCombinator<'a> {
     type Type = Codesec<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CodesecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, CodesecContentCombinator<'a>>, CodesecCont0<'a>>, CodesecMapper<'a>>;
 
 
@@ -12290,7 +12290,7 @@ pub open spec fn spec_codesec_cont0(deps: u64) -> AndThen<Bytes, SpecCodesecCont
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_codesec_content())
 }
-                
+
 pub fn codesec<'a>() -> (o: CodesecCombinator<'a>)
     ensures o@ == spec_codesec(),
 {
@@ -12321,7 +12321,7 @@ impl<'a> Continuation<&u64> for CodesecCont0<'a> {
         AndThen(Bytes(size.ex_into()), codesec_content())
     }
 }
-                
+
 
 pub struct SpecStart {
     pub func: SpecFuncidx,
@@ -12401,13 +12401,13 @@ pub struct SpecStartCombinator(SpecStartCombinatorAlias);
 
 impl SpecCombinator for SpecStartCombinator {
     type Type = SpecStart;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecStartCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecStartCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12415,11 +12415,11 @@ impl SecureSpecCombinator for SpecStartCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecStartCombinatorAlias = Mapped<SpecFuncidxCombinator, StartMapper>;
@@ -12432,19 +12432,19 @@ impl View for StartCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for StartCombinator {
     type Type = Start;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type StartCombinatorAlias = Mapped<FuncidxCombinator, StartMapper>;
 
 
@@ -12456,7 +12456,7 @@ pub closed spec fn spec_start() -> SpecStartCombinator {
     })
 }
 
-                
+
 pub fn start() -> (o: StartCombinator)
     ensures o@ == spec_start(),
 {
@@ -12467,7 +12467,7 @@ pub fn start() -> (o: StartCombinator)
     })
 }
 
-                
+
 
 pub struct SpecTable {
     pub ty: SpecTabletype,
@@ -12547,13 +12547,13 @@ pub struct SpecTableCombinator(SpecTableCombinatorAlias);
 
 impl SpecCombinator for SpecTableCombinator {
     type Type = SpecTable;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTableCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTableCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12561,11 +12561,11 @@ impl SecureSpecCombinator for SpecTableCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTableCombinatorAlias = Mapped<SpecTabletypeCombinator, TableMapper>;
@@ -12578,19 +12578,19 @@ impl View for TableCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TableCombinator {
     type Type = Table;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TableCombinatorAlias = Mapped<TabletypeCombinator, TableMapper>;
 
 
@@ -12602,7 +12602,7 @@ pub closed spec fn spec_table() -> SpecTableCombinator {
     })
 }
 
-                
+
 pub fn table() -> (o: TableCombinator)
     ensures o@ == spec_table(),
 {
@@ -12613,7 +12613,7 @@ pub fn table() -> (o: TableCombinator)
     })
 }
 
-                
+
 
 pub struct SpecResulttype {
     pub l: u64,
@@ -12696,13 +12696,13 @@ pub struct SpecResulttypeCombinator(SpecResulttypeCombinatorAlias);
 
 impl SpecCombinator for SpecResulttypeCombinator {
     type Type = SpecResulttype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecResulttypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecResulttypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12710,11 +12710,11 @@ impl SecureSpecCombinator for SpecResulttypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecResulttypeCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecValtypeCombinator>>, ResulttypeMapper>;
@@ -12727,19 +12727,19 @@ impl<'a> View for ResulttypeCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ResulttypeCombinator<'a> {
     type Type = Resulttype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ResulttypeCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ValtypeCombinator>, ResulttypeCont0<'a>>, ResulttypeMapper>;
 
 
@@ -12755,7 +12755,7 @@ pub open spec fn spec_resulttype_cont0(deps: u64) -> RepeatN<SpecValtypeCombinat
     let l = deps;
     RepeatN(spec_valtype(), l.spec_into())
 }
-                
+
 pub fn resulttype<'a>() -> (o: ResulttypeCombinator<'a>)
     ensures o@ == spec_resulttype(),
 {
@@ -12786,7 +12786,7 @@ impl<'a> Continuation<&u64> for ResulttypeCont0<'a> {
         RepeatN(valtype(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecTablesecContent {
     pub l: u64,
@@ -12869,13 +12869,13 @@ pub struct SpecTablesecContentCombinator(SpecTablesecContentCombinatorAlias);
 
 impl SpecCombinator for SpecTablesecContentCombinator {
     type Type = SpecTablesecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTablesecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTablesecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -12883,11 +12883,11 @@ impl SecureSpecCombinator for SpecTablesecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTablesecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecTableCombinator>>, TablesecContentMapper>;
@@ -12900,19 +12900,19 @@ impl<'a> View for TablesecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TablesecContentCombinator<'a> {
     type Type = TablesecContent;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TablesecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<TableCombinator>, TablesecContentCont0<'a>>, TablesecContentMapper>;
 
 
@@ -12928,7 +12928,7 @@ pub open spec fn spec_tablesec_content_cont0(deps: u64) -> RepeatN<SpecTableComb
     let l = deps;
     RepeatN(spec_table(), l.spec_into())
 }
-                
+
 pub fn tablesec_content<'a>() -> (o: TablesecContentCombinator<'a>)
     ensures o@ == spec_tablesec_content(),
 {
@@ -12959,7 +12959,7 @@ impl<'a> Continuation<&u64> for TablesecContentCont0<'a> {
         RepeatN(table(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecElemsec {
     pub size: u64,
@@ -13042,13 +13042,13 @@ pub struct SpecElemsecCombinator(SpecElemsecCombinatorAlias);
 
 impl SpecCombinator for SpecElemsecCombinator {
     type Type = SpecElemsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecElemsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecElemsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13056,11 +13056,11 @@ impl SecureSpecCombinator for SpecElemsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecElemsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecElemsecContentCombinator>>, ElemsecMapper<'static>>;
@@ -13073,19 +13073,19 @@ impl<'a> View for ElemsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ElemsecCombinator<'a> {
     type Type = Elemsec<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ElemsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, ElemsecContentCombinator<'a>>, ElemsecCont0<'a>>, ElemsecMapper<'a>>;
 
 
@@ -13101,7 +13101,7 @@ pub open spec fn spec_elemsec_cont0(deps: u64) -> AndThen<Bytes, SpecElemsecCont
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_elemsec_content())
 }
-                
+
 pub fn elemsec<'a>() -> (o: ElemsecCombinator<'a>)
     ensures o@ == spec_elemsec(),
 {
@@ -13132,7 +13132,7 @@ impl<'a> Continuation<&u64> for ElemsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), elemsec_content())
     }
 }
-                
+
 
 pub struct SpecMemsecContent {
     pub l: u64,
@@ -13215,13 +13215,13 @@ pub struct SpecMemsecContentCombinator(SpecMemsecContentCombinatorAlias);
 
 impl SpecCombinator for SpecMemsecContentCombinator {
     type Type = SpecMemsecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemsecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemsecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13229,11 +13229,11 @@ impl SecureSpecCombinator for SpecMemsecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemsecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecMemCombinator>>, MemsecContentMapper>;
@@ -13246,19 +13246,19 @@ impl<'a> View for MemsecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemsecContentCombinator<'a> {
     type Type = MemsecContent;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemsecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<MemCombinator>, MemsecContentCont0<'a>>, MemsecContentMapper>;
 
 
@@ -13274,7 +13274,7 @@ pub open spec fn spec_memsec_content_cont0(deps: u64) -> RepeatN<SpecMemCombinat
     let l = deps;
     RepeatN(spec_mem(), l.spec_into())
 }
-                
+
 pub fn memsec_content<'a>() -> (o: MemsecContentCombinator<'a>)
     ensures o@ == spec_memsec_content(),
 {
@@ -13305,7 +13305,7 @@ impl<'a> Continuation<&u64> for MemsecContentCont0<'a> {
         RepeatN(mem(), l.ex_into())
     }
 }
-                
+
 pub type SpecMyCustomSection = SpecByteVec;
 pub type MyCustomSection = ByteVec;
 
@@ -13314,13 +13314,13 @@ pub struct SpecMyCustomSectionCombinator(SpecMyCustomSectionCombinatorAlias);
 
 impl SpecCombinator for SpecMyCustomSectionCombinator {
     type Type = SpecMyCustomSection;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMyCustomSectionCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMyCustomSectionCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13328,11 +13328,11 @@ impl SecureSpecCombinator for SpecMyCustomSectionCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMyCustomSectionCombinatorAlias = SpecByteVecCombinator;
@@ -13345,19 +13345,19 @@ impl<'a> View for MyCustomSectionCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MyCustomSectionCombinator<'a> {
     type Type = MyCustomSection;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MyCustomSectionCombinatorAlias<'a> = ByteVecCombinator<'a>;
 
 
@@ -13365,14 +13365,14 @@ pub closed spec fn spec_my_custom_section() -> SpecMyCustomSectionCombinator {
     SpecMyCustomSectionCombinator(spec_byte_vec())
 }
 
-                
+
 pub fn my_custom_section<'a>() -> (o: MyCustomSectionCombinator<'a>)
     ensures o@ == spec_my_custom_section(),
 {
     MyCustomSectionCombinator(byte_vec())
 }
 
-                
+
 
 pub struct SpecCustom {
     pub name: SpecName,
@@ -13455,13 +13455,13 @@ pub struct SpecCustomCombinator(SpecCustomCombinatorAlias);
 
 impl SpecCombinator for SpecCustomCombinator {
     type Type = SpecCustom;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCustomCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCustomCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13469,11 +13469,11 @@ impl SecureSpecCombinator for SpecCustomCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCustomCombinatorAlias = Mapped<(SpecNameCombinator, SpecMyCustomSectionCombinator), CustomMapper>;
@@ -13486,19 +13486,19 @@ impl<'a> View for CustomCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CustomCombinator<'a> {
     type Type = Custom;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CustomCombinatorAlias<'a> = Mapped<(NameCombinator<'a>, MyCustomSectionCombinator<'a>), CustomMapper>;
 
 
@@ -13510,7 +13510,7 @@ pub closed spec fn spec_custom() -> SpecCustomCombinator {
     })
 }
 
-                
+
 pub fn custom<'a>() -> (o: CustomCombinator<'a>)
     ensures o@ == spec_custom(),
 {
@@ -13521,7 +13521,7 @@ pub fn custom<'a>() -> (o: CustomCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecFunctype {
     pub tag: u8,
@@ -13608,13 +13608,13 @@ pub struct SpecFunctypeCombinator(SpecFunctypeCombinatorAlias);
 
 impl SpecCombinator for SpecFunctypeCombinator {
     type Type = SpecFunctype;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecFunctypeCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecFunctypeCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13622,11 +13622,11 @@ impl SecureSpecCombinator for SpecFunctypeCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecFunctypeCombinatorAlias = Mapped<(Refined<U8, TagPred<u8>>, (SpecResulttypeCombinator, SpecResulttypeCombinator)), FunctypeMapper>;
@@ -13639,19 +13639,19 @@ impl<'a> View for FunctypeCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for FunctypeCombinator<'a> {
     type Type = Functype;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type FunctypeCombinatorAlias<'a> = Mapped<(Refined<U8, TagPred<u8>>, (ResulttypeCombinator<'a>, ResulttypeCombinator<'a>)), FunctypeMapper>;
 
 
@@ -13663,7 +13663,7 @@ pub closed spec fn spec_functype() -> SpecFunctypeCombinator {
     })
 }
 
-                
+
 pub fn functype<'a>() -> (o: FunctypeCombinator<'a>)
     ensures o@ == spec_functype(),
 {
@@ -13674,7 +13674,7 @@ pub fn functype<'a>() -> (o: FunctypeCombinator<'a>)
     })
 }
 
-                
+
 
 pub struct SpecTypesecContent {
     pub l: u64,
@@ -13757,13 +13757,13 @@ pub struct SpecTypesecContentCombinator(SpecTypesecContentCombinatorAlias);
 
 impl SpecCombinator for SpecTypesecContentCombinator {
     type Type = SpecTypesecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTypesecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTypesecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13771,11 +13771,11 @@ impl SecureSpecCombinator for SpecTypesecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTypesecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecFunctypeCombinator>>, TypesecContentMapper>;
@@ -13788,19 +13788,19 @@ impl<'a> View for TypesecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TypesecContentCombinator<'a> {
     type Type = TypesecContent;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TypesecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<FunctypeCombinator<'a>>, TypesecContentCont0<'a>>, TypesecContentMapper>;
 
 
@@ -13816,7 +13816,7 @@ pub open spec fn spec_typesec_content_cont0(deps: u64) -> RepeatN<SpecFunctypeCo
     let l = deps;
     RepeatN(spec_functype(), l.spec_into())
 }
-                
+
 pub fn typesec_content<'a>() -> (o: TypesecContentCombinator<'a>)
     ensures o@ == spec_typesec_content(),
 {
@@ -13847,7 +13847,7 @@ impl<'a> Continuation<&u64> for TypesecContentCont0<'a> {
         RepeatN(functype(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecDatacountsec {
     pub size: u64,
@@ -13930,13 +13930,13 @@ pub struct SpecDatacountsecCombinator(SpecDatacountsecCombinatorAlias);
 
 impl SpecCombinator for SpecDatacountsecCombinator {
     type Type = SpecDatacountsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDatacountsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDatacountsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -13944,11 +13944,11 @@ impl SecureSpecCombinator for SpecDatacountsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDatacountsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, UnsignedLEB128>>, DatacountsecMapper>;
@@ -13961,19 +13961,19 @@ impl<'a> View for DatacountsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DatacountsecCombinator<'a> {
     type Type = Datacountsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DatacountsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, UnsignedLEB128>, DatacountsecCont0<'a>>, DatacountsecMapper>;
 
 
@@ -13989,7 +13989,7 @@ pub open spec fn spec_datacountsec_cont0(deps: u64) -> AndThen<Bytes, UnsignedLE
     let size = deps;
     AndThen(Bytes(size.spec_into()), UnsignedLEB128)
 }
-                
+
 pub fn datacountsec<'a>() -> (o: DatacountsecCombinator<'a>)
     ensures o@ == spec_datacountsec(),
 {
@@ -14020,7 +14020,7 @@ impl<'a> Continuation<&u64> for DatacountsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), UnsignedLEB128)
     }
 }
-                
+
 pub type SpecSigned32 = Seq<u8>;
 pub type Signed32<'a> = &'a [u8];
 
@@ -14029,13 +14029,13 @@ pub struct SpecSigned32Combinator(SpecSigned32CombinatorAlias);
 
 impl SpecCombinator for SpecSigned32Combinator {
     type Type = SpecSigned32;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecSigned32Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecSigned32CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14043,11 +14043,11 @@ impl SecureSpecCombinator for SpecSigned32Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecSigned32CombinatorAlias = BytesN<4>;
@@ -14060,19 +14060,19 @@ impl View for Signed32Combinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for Signed32Combinator {
     type Type = Signed32<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type Signed32CombinatorAlias = BytesN<4>;
 
 
@@ -14080,14 +14080,14 @@ pub closed spec fn spec_signed_32() -> SpecSigned32Combinator {
     SpecSigned32Combinator(BytesN::<4>)
 }
 
-                
+
 pub fn signed_32() -> (o: Signed32Combinator)
     ensures o@ == spec_signed_32(),
 {
     Signed32Combinator(BytesN::<4>)
 }
 
-                
+
 
 pub enum SpecExportdesc {
     Func(SpecFuncidx),
@@ -14171,7 +14171,7 @@ impl From<ExportdescInner> for Exportdesc {
             Either::Right(Either::Right(Either::Right(m))) => Exportdesc::Global(m),
         }
     }
-    
+
 }
 
 
@@ -14218,13 +14218,13 @@ pub struct SpecExportdescCombinator(SpecExportdescCombinatorAlias);
 
 impl SpecCombinator for SpecExportdescCombinator {
     type Type = SpecExportdesc;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExportdescCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExportdescCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14232,11 +14232,11 @@ impl SecureSpecCombinator for SpecExportdescCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExportdescCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, SpecFuncidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, SpecTableidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, SpecMemidxCombinator>, Preceded<Tag<U8, u8>, SpecGlobalidxCombinator>>>>, ExportdescMapper>;
@@ -14253,19 +14253,19 @@ impl View for ExportdescCombinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExportdescCombinator {
     type Type = Exportdesc;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExportdescCombinatorAlias = Mapped<OrdChoice<Preceded<Tag<U8, u8>, FuncidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, TableidxCombinator>, OrdChoice<Preceded<Tag<U8, u8>, MemidxCombinator>, Preceded<Tag<U8, u8>, GlobalidxCombinator>>>>, ExportdescMapper>;
 
 
@@ -14273,14 +14273,14 @@ pub closed spec fn spec_exportdesc() -> SpecExportdescCombinator {
     SpecExportdescCombinator(Mapped { inner: OrdChoice(Preceded(Tag::spec_new(U8, EXPORTDESCFUNC_0_FRONT_CONST), spec_funcidx()), OrdChoice(Preceded(Tag::spec_new(U8, EXPORTDESCTABLE_0_FRONT_CONST), spec_tableidx()), OrdChoice(Preceded(Tag::spec_new(U8, EXPORTDESCMEM_0_FRONT_CONST), spec_memidx()), Preceded(Tag::spec_new(U8, EXPORTDESCGLOBAL_0_FRONT_CONST), spec_globalidx())))), mapper: ExportdescMapper::spec_new() })
 }
 
-                
+
 pub fn exportdesc() -> (o: ExportdescCombinator)
     ensures o@ == spec_exportdesc(),
 {
     ExportdescCombinator(Mapped { inner: OrdChoice::new(Preceded(Tag::new(U8, EXPORTDESCFUNC_0_FRONT_CONST), funcidx()), OrdChoice::new(Preceded(Tag::new(U8, EXPORTDESCTABLE_0_FRONT_CONST), tableidx()), OrdChoice::new(Preceded(Tag::new(U8, EXPORTDESCMEM_0_FRONT_CONST), memidx()), Preceded(Tag::new(U8, EXPORTDESCGLOBAL_0_FRONT_CONST), globalidx())))), mapper: ExportdescMapper::new() })
 }
 
-                
+
 
 pub struct SpecExport {
     pub nm: SpecName,
@@ -14363,13 +14363,13 @@ pub struct SpecExportCombinator(SpecExportCombinatorAlias);
 
 impl SpecCombinator for SpecExportCombinator {
     type Type = SpecExport;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExportCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExportCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14377,11 +14377,11 @@ impl SecureSpecCombinator for SpecExportCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExportCombinatorAlias = Mapped<(SpecNameCombinator, SpecExportdescCombinator), ExportMapper>;
@@ -14394,19 +14394,19 @@ impl<'a> View for ExportCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExportCombinator<'a> {
     type Type = Export;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExportCombinatorAlias<'a> = Mapped<(NameCombinator<'a>, ExportdescCombinator), ExportMapper>;
 
 
@@ -14418,7 +14418,7 @@ pub closed spec fn spec_export() -> SpecExportCombinator {
     })
 }
 
-                
+
 pub fn export<'a>() -> (o: ExportCombinator<'a>)
     ensures o@ == spec_export(),
 {
@@ -14429,7 +14429,7 @@ pub fn export<'a>() -> (o: ExportCombinator<'a>)
     })
 }
 
-                
+
 pub type SpecSigned64 = Seq<u8>;
 pub type Signed64<'a> = &'a [u8];
 
@@ -14438,13 +14438,13 @@ pub struct SpecSigned64Combinator(SpecSigned64CombinatorAlias);
 
 impl SpecCombinator for SpecSigned64Combinator {
     type Type = SpecSigned64;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecSigned64Combinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecSigned64CombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14452,11 +14452,11 @@ impl SecureSpecCombinator for SpecSigned64Combinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecSigned64CombinatorAlias = BytesN<8>;
@@ -14469,19 +14469,19 @@ impl View for Signed64Combinator {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for Signed64Combinator {
     type Type = Signed64<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type Signed64CombinatorAlias = BytesN<8>;
 
 
@@ -14489,14 +14489,14 @@ pub closed spec fn spec_signed_64() -> SpecSigned64Combinator {
     SpecSigned64Combinator(BytesN::<8>)
 }
 
-                
+
 pub fn signed_64() -> (o: Signed64Combinator)
     ensures o@ == spec_signed_64(),
 {
     Signed64Combinator(BytesN::<8>)
 }
 
-                
+
 
 pub struct SpecTypesec {
     pub size: u64,
@@ -14579,13 +14579,13 @@ pub struct SpecTypesecCombinator(SpecTypesecCombinatorAlias);
 
 impl SpecCombinator for SpecTypesecCombinator {
     type Type = SpecTypesec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTypesecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTypesecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14593,11 +14593,11 @@ impl SecureSpecCombinator for SpecTypesecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTypesecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecTypesecContentCombinator>>, TypesecMapper>;
@@ -14610,19 +14610,19 @@ impl<'a> View for TypesecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TypesecCombinator<'a> {
     type Type = Typesec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TypesecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, TypesecContentCombinator<'a>>, TypesecCont0<'a>>, TypesecMapper>;
 
 
@@ -14638,7 +14638,7 @@ pub open spec fn spec_typesec_cont0(deps: u64) -> AndThen<Bytes, SpecTypesecCont
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_typesec_content())
 }
-                
+
 pub fn typesec<'a>() -> (o: TypesecCombinator<'a>)
     ensures o@ == spec_typesec(),
 {
@@ -14669,7 +14669,7 @@ impl<'a> Continuation<&u64> for TypesecCont0<'a> {
         AndThen(Bytes(size.ex_into()), typesec_content())
     }
 }
-                
+
 
 pub struct SpecExports {
     pub l: u64,
@@ -14752,13 +14752,13 @@ pub struct SpecExportsCombinator(SpecExportsCombinatorAlias);
 
 impl SpecCombinator for SpecExportsCombinator {
     type Type = SpecExports;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExportsCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExportsCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14766,11 +14766,11 @@ impl SecureSpecCombinator for SpecExportsCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExportsCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecExportCombinator>>, ExportsMapper>;
@@ -14783,19 +14783,19 @@ impl<'a> View for ExportsCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExportsCombinator<'a> {
     type Type = Exports;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExportsCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<ExportCombinator<'a>>, ExportsCont0<'a>>, ExportsMapper>;
 
 
@@ -14811,7 +14811,7 @@ pub open spec fn spec_exports_cont0(deps: u64) -> RepeatN<SpecExportCombinator> 
     let l = deps;
     RepeatN(spec_export(), l.spec_into())
 }
-                
+
 pub fn exports<'a>() -> (o: ExportsCombinator<'a>)
     ensures o@ == spec_exports(),
 {
@@ -14842,7 +14842,7 @@ impl<'a> Continuation<&u64> for ExportsCont0<'a> {
         RepeatN(export(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecExportsec {
     pub size: u64,
@@ -14925,13 +14925,13 @@ pub struct SpecExportsecCombinator(SpecExportsecCombinatorAlias);
 
 impl SpecCombinator for SpecExportsecCombinator {
     type Type = SpecExportsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecExportsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecExportsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -14939,11 +14939,11 @@ impl SecureSpecCombinator for SpecExportsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecExportsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecExportsCombinator>>, ExportsecMapper>;
@@ -14956,19 +14956,19 @@ impl<'a> View for ExportsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ExportsecCombinator<'a> {
     type Type = Exportsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ExportsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, ExportsCombinator<'a>>, ExportsecCont0<'a>>, ExportsecMapper>;
 
 
@@ -14984,7 +14984,7 @@ pub open spec fn spec_exportsec_cont0(deps: u64) -> AndThen<Bytes, SpecExportsCo
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_exports())
 }
-                
+
 pub fn exportsec<'a>() -> (o: ExportsecCombinator<'a>)
     ensures o@ == spec_exportsec(),
 {
@@ -15015,7 +15015,7 @@ impl<'a> Continuation<&u64> for ExportsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), exports())
     }
 }
-                
+
 
 pub struct SpecCustomsec {
     pub size: u64,
@@ -15098,13 +15098,13 @@ pub struct SpecCustomsecCombinator(SpecCustomsecCombinatorAlias);
 
 impl SpecCombinator for SpecCustomsecCombinator {
     type Type = SpecCustomsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecCustomsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecCustomsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15112,11 +15112,11 @@ impl SecureSpecCombinator for SpecCustomsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecCustomsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecCustomCombinator>>, CustomsecMapper>;
@@ -15129,19 +15129,19 @@ impl<'a> View for CustomsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for CustomsecCombinator<'a> {
     type Type = Customsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type CustomsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, CustomCombinator<'a>>, CustomsecCont0<'a>>, CustomsecMapper>;
 
 
@@ -15157,7 +15157,7 @@ pub open spec fn spec_customsec_cont0(deps: u64) -> AndThen<Bytes, SpecCustomCom
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_custom())
 }
-                
+
 pub fn customsec<'a>() -> (o: CustomsecCombinator<'a>)
     ensures o@ == spec_customsec(),
 {
@@ -15188,7 +15188,7 @@ impl<'a> Continuation<&u64> for CustomsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), custom())
     }
 }
-                
+
 
 pub struct SpecTablesec {
     pub size: u64,
@@ -15271,13 +15271,13 @@ pub struct SpecTablesecCombinator(SpecTablesecCombinatorAlias);
 
 impl SpecCombinator for SpecTablesecCombinator {
     type Type = SpecTablesec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecTablesecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecTablesecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15285,11 +15285,11 @@ impl SecureSpecCombinator for SpecTablesecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecTablesecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecTablesecContentCombinator>>, TablesecMapper>;
@@ -15302,19 +15302,19 @@ impl<'a> View for TablesecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for TablesecCombinator<'a> {
     type Type = Tablesec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type TablesecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, TablesecContentCombinator<'a>>, TablesecCont0<'a>>, TablesecMapper>;
 
 
@@ -15330,7 +15330,7 @@ pub open spec fn spec_tablesec_cont0(deps: u64) -> AndThen<Bytes, SpecTablesecCo
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_tablesec_content())
 }
-                
+
 pub fn tablesec<'a>() -> (o: TablesecCombinator<'a>)
     ensures o@ == spec_tablesec(),
 {
@@ -15361,7 +15361,7 @@ impl<'a> Continuation<&u64> for TablesecCont0<'a> {
         AndThen(Bytes(size.ex_into()), tablesec_content())
     }
 }
-                
+
 
 pub struct SpecMemsec {
     pub size: u64,
@@ -15444,13 +15444,13 @@ pub struct SpecMemsecCombinator(SpecMemsecCombinatorAlias);
 
 impl SpecCombinator for SpecMemsecCombinator {
     type Type = SpecMemsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecMemsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecMemsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15458,11 +15458,11 @@ impl SecureSpecCombinator for SpecMemsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecMemsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecMemsecContentCombinator>>, MemsecMapper>;
@@ -15475,19 +15475,19 @@ impl<'a> View for MemsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for MemsecCombinator<'a> {
     type Type = Memsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type MemsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, MemsecContentCombinator<'a>>, MemsecCont0<'a>>, MemsecMapper>;
 
 
@@ -15503,7 +15503,7 @@ pub open spec fn spec_memsec_cont0(deps: u64) -> AndThen<Bytes, SpecMemsecConten
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_memsec_content())
 }
-                
+
 pub fn memsec<'a>() -> (o: MemsecCombinator<'a>)
     ensures o@ == spec_memsec(),
 {
@@ -15534,7 +15534,7 @@ impl<'a> Continuation<&u64> for MemsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), memsec_content())
     }
 }
-                
+
 
 pub struct SpecGlobalsecContent {
     pub l: u64,
@@ -15617,13 +15617,13 @@ pub struct SpecGlobalsecContentCombinator(SpecGlobalsecContentCombinatorAlias);
 
 impl SpecCombinator for SpecGlobalsecContentCombinator {
     type Type = SpecGlobalsecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecGlobalsecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecGlobalsecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15631,11 +15631,11 @@ impl SecureSpecCombinator for SpecGlobalsecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecGlobalsecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecGlobalCombinator>>, GlobalsecContentMapper<'static>>;
@@ -15648,19 +15648,19 @@ impl<'a> View for GlobalsecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for GlobalsecContentCombinator<'a> {
     type Type = GlobalsecContent<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type GlobalsecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<GlobalCombinator<'a>>, GlobalsecContentCont0<'a>>, GlobalsecContentMapper<'a>>;
 
 
@@ -15676,7 +15676,7 @@ pub open spec fn spec_globalsec_content_cont0(deps: u64) -> RepeatN<SpecGlobalCo
     let l = deps;
     RepeatN(spec_global(), l.spec_into())
 }
-                
+
 pub fn globalsec_content<'a>() -> (o: GlobalsecContentCombinator<'a>)
     ensures o@ == spec_globalsec_content(),
 {
@@ -15707,7 +15707,7 @@ impl<'a> Continuation<&u64> for GlobalsecContentCont0<'a> {
         RepeatN(global(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecGlobalsec {
     pub size: u64,
@@ -15790,13 +15790,13 @@ pub struct SpecGlobalsecCombinator(SpecGlobalsecCombinatorAlias);
 
 impl SpecCombinator for SpecGlobalsecCombinator {
     type Type = SpecGlobalsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecGlobalsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecGlobalsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15804,11 +15804,11 @@ impl SecureSpecCombinator for SpecGlobalsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecGlobalsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecGlobalsecContentCombinator>>, GlobalsecMapper<'static>>;
@@ -15821,19 +15821,19 @@ impl<'a> View for GlobalsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for GlobalsecCombinator<'a> {
     type Type = Globalsec<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type GlobalsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, GlobalsecContentCombinator<'a>>, GlobalsecCont0<'a>>, GlobalsecMapper<'a>>;
 
 
@@ -15849,7 +15849,7 @@ pub open spec fn spec_globalsec_cont0(deps: u64) -> AndThen<Bytes, SpecGlobalsec
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_globalsec_content())
 }
-                
+
 pub fn globalsec<'a>() -> (o: GlobalsecCombinator<'a>)
     ensures o@ == spec_globalsec(),
 {
@@ -15880,7 +15880,7 @@ impl<'a> Continuation<&u64> for GlobalsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), globalsec_content())
     }
 }
-                
+
 
 pub struct SpecStartsec {
     pub size: u64,
@@ -15963,13 +15963,13 @@ pub struct SpecStartsecCombinator(SpecStartsecCombinatorAlias);
 
 impl SpecCombinator for SpecStartsecCombinator {
     type Type = SpecStartsec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecStartsecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecStartsecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -15977,11 +15977,11 @@ impl SecureSpecCombinator for SpecStartsecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecStartsecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecStartCombinator>>, StartsecMapper>;
@@ -15994,19 +15994,19 @@ impl<'a> View for StartsecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for StartsecCombinator<'a> {
     type Type = Startsec;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type StartsecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, StartCombinator>, StartsecCont0<'a>>, StartsecMapper>;
 
 
@@ -16022,7 +16022,7 @@ pub open spec fn spec_startsec_cont0(deps: u64) -> AndThen<Bytes, SpecStartCombi
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_start())
 }
-                
+
 pub fn startsec<'a>() -> (o: StartsecCombinator<'a>)
     ensures o@ == spec_startsec(),
 {
@@ -16053,7 +16053,7 @@ impl<'a> Continuation<&u64> for StartsecCont0<'a> {
         AndThen(Bytes(size.ex_into()), start())
     }
 }
-                
+
 
 pub struct SpecDatasecContent {
     pub l: u64,
@@ -16136,13 +16136,13 @@ pub struct SpecDatasecContentCombinator(SpecDatasecContentCombinatorAlias);
 
 impl SpecCombinator for SpecDatasecContentCombinator {
     type Type = SpecDatasecContent;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDatasecContentCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDatasecContentCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -16150,11 +16150,11 @@ impl SecureSpecCombinator for SpecDatasecContentCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDatasecContentCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, RepeatN<SpecDataCombinator>>, DatasecContentMapper<'static>>;
@@ -16167,19 +16167,19 @@ impl<'a> View for DatasecContentCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DatasecContentCombinator<'a> {
     type Type = DatasecContent<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DatasecContentCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, RepeatN<DataCombinator<'a>>, DatasecContentCont0<'a>>, DatasecContentMapper<'a>>;
 
 
@@ -16195,7 +16195,7 @@ pub open spec fn spec_datasec_content_cont0(deps: u64) -> RepeatN<SpecDataCombin
     let l = deps;
     RepeatN(spec_data(), l.spec_into())
 }
-                
+
 pub fn datasec_content<'a>() -> (o: DatasecContentCombinator<'a>)
     ensures o@ == spec_datasec_content(),
 {
@@ -16226,7 +16226,7 @@ impl<'a> Continuation<&u64> for DatasecContentCont0<'a> {
         RepeatN(data(), l.ex_into())
     }
 }
-                
+
 
 pub struct SpecDatasec {
     pub size: u64,
@@ -16309,13 +16309,13 @@ pub struct SpecDatasecCombinator(SpecDatasecCombinatorAlias);
 
 impl SpecCombinator for SpecDatasecCombinator {
     type Type = SpecDatasec;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecDatasecCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecDatasecCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -16323,11 +16323,11 @@ impl SecureSpecCombinator for SpecDatasecCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecDatasecCombinatorAlias = Mapped<SpecDepend<UnsignedLEB128, AndThen<Bytes, SpecDatasecContentCombinator>>, DatasecMapper<'static>>;
@@ -16340,19 +16340,19 @@ impl<'a> View for DatasecCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for DatasecCombinator<'a> {
     type Type = Datasec<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type DatasecCombinatorAlias<'a> = Mapped<Depend<&'a [u8], Vec<u8>, UnsignedLEB128, AndThen<Bytes, DatasecContentCombinator<'a>>, DatasecCont0<'a>>, DatasecMapper<'a>>;
 
 
@@ -16368,7 +16368,7 @@ pub open spec fn spec_datasec_cont0(deps: u64) -> AndThen<Bytes, SpecDatasecCont
     let size = deps;
     AndThen(Bytes(size.spec_into()), spec_datasec_content())
 }
-                
+
 pub fn datasec<'a>() -> (o: DatasecCombinator<'a>)
     ensures o@ == spec_datasec(),
 {
@@ -16399,7 +16399,7 @@ impl<'a> Continuation<&u64> for DatasecCont0<'a> {
         AndThen(Bytes(size.ex_into()), datasec_content())
     }
 }
-                
+
 
 pub struct SpecModule {
     pub magic: Seq<u8>,
@@ -16607,13 +16607,13 @@ pub struct SpecModuleCombinator(SpecModuleCombinatorAlias);
 
 impl SpecCombinator for SpecModuleCombinator {
     type Type = SpecModule;
-    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()> 
+    closed spec fn spec_parse(&self, s: Seq<u8>) -> Result<(usize, Self::Type), ()>
     { self.0.spec_parse(s) }
-    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()> 
+    closed spec fn spec_serialize(&self, v: Self::Type) -> Result<Seq<u8>, ()>
     { self.0.spec_serialize(v) }
 }
 impl SecureSpecCombinator for SpecModuleCombinator {
-    open spec fn is_prefix_secure() -> bool 
+    open spec fn is_prefix_secure() -> bool
     { SpecModuleCombinatorAlias::is_prefix_secure() }
     proof fn theorem_serialize_parse_roundtrip(&self, v: Self::Type)
     { self.0.theorem_serialize_parse_roundtrip(v) }
@@ -16621,11 +16621,11 @@ impl SecureSpecCombinator for SpecModuleCombinator {
     { self.0.theorem_parse_serialize_roundtrip(buf) }
     proof fn lemma_prefix_secure(&self, s1: Seq<u8>, s2: Seq<u8>)
     { self.0.lemma_prefix_secure(s1, s2) }
-    proof fn lemma_parse_length(&self, s: Seq<u8>) 
+    proof fn lemma_parse_length(&self, s: Seq<u8>)
     { self.0.lemma_parse_length(s) }
-    closed spec fn is_productive(&self) -> bool 
+    closed spec fn is_productive(&self) -> bool
     { self.0.is_productive() }
-    proof fn lemma_parse_productive(&self, s: Seq<u8>) 
+    proof fn lemma_parse_productive(&self, s: Seq<u8>)
     { self.0.lemma_parse_productive(s) }
 }
 pub type SpecModuleCombinatorAlias = Mapped<(Refined<BytesN<4>, TagPred<Seq<u8>>>, (Refined<BytesN<4>, TagPred<Seq<u8>>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecTypesecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecImportsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecFuncsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecTablesecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecMemsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecGlobalsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecExportsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecStartsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecElemsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecDatacountsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCodesecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>, (Opt<Preceded<Tag<U8, u8>, SpecDatasecCombinator>>, Opt<Preceded<Tag<U8, u8>, SpecCustomsecCombinator>>)))))))))))))))))))))))))), ModuleMapper<'static>>;
@@ -16677,19 +16677,19 @@ impl<'a> View for ModuleCombinator<'a> {
 }
 impl<'a> Combinator<&'a [u8], Vec<u8>> for ModuleCombinator<'a> {
     type Type = Module<'a>;
-    closed spec fn spec_length(&self) -> Option<usize> 
+    closed spec fn spec_length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::spec_length(&self.0) }
-    fn length(&self) -> Option<usize> 
+    fn length(&self) -> Option<usize>
     { <_ as Combinator<&[u8], Vec<u8>>>::length(&self.0) }
-    closed spec fn parse_requires(&self) -> bool 
+    closed spec fn parse_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::parse_requires(&self.0) }
-    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>) 
+    fn parse(&self, s: &'a [u8]) -> (res: Result<(usize, Self::Type), ParseError>)
     { <_ as Combinator<&[u8],Vec<u8>>>::parse(&self.0, s) }
-    closed spec fn serialize_requires(&self) -> bool 
+    closed spec fn serialize_requires(&self) -> bool
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize_requires(&self.0) }
     fn serialize(&self, v: Self::Type, data: &mut Vec<u8>, pos: usize) -> (o: Result<usize, SerializeError>)
     { <_ as Combinator<&[u8], Vec<u8>>>::serialize(&self.0, v, data, pos) }
-} 
+}
 pub type ModuleCombinatorAlias<'a> = Mapped<(Refined<BytesN<4>, TagPred<&'a [u8]>>, (Refined<BytesN<4>, TagPred<&'a [u8]>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, TypesecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, ImportsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, FuncsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, TablesecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, MemsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, GlobalsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, ExportsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, StartsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, ElemsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, DatacountsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CodesecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>, (Opt<Preceded<Tag<U8, u8>, DatasecCombinator<'a>>>, Opt<Preceded<Tag<U8, u8>, CustomsecCombinator<'a>>>)))))))))))))))))))))))))), ModuleMapper<'a>>;
 
 
@@ -16701,7 +16701,7 @@ pub closed spec fn spec_module() -> SpecModuleCombinator {
     })
 }
 
-                
+
 pub fn module<'a>() -> (o: ModuleCombinator<'a>)
     ensures o@ == spec_module(),
 {
@@ -16712,7 +16712,7 @@ pub fn module<'a>() -> (o: ModuleCombinator<'a>)
     })
 }
 
-                
+
 pub type SpecELEMKIND = u8;
 pub type ELEMKIND = u8;
 
