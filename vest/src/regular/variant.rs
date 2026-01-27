@@ -625,7 +625,7 @@ macro_rules! ord_choice_type {
     };
 
     ($c:ty, $($rest:ty),* $(,)?) => {
-        OrdChoice<$c, ord_choice_type!($($rest),*)>
+        Choice<$c, ord_choice_type!($($rest),*)>
     };
 }
 

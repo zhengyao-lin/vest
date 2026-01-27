@@ -72,10 +72,10 @@ impl<T: SecureSpecCombinator> SecureSpecCombinator for ExplicitTag<T> {
 impl<'a, T> Combinator<'a, &'a [u8], Vec<u8>> for ExplicitTag<T> where
     T: SpecCombinator
         + SecureSpecCombinator
-        + Combinator<'a, &'a [u8], Vec<u8>, SType = &'a <T as Combinator<'a, &'a [u8], Vec<u8>>>::Type>,
+        + Combinator<'a, &'a [u8], Vec<u8>>,
     <T as View>::V: SecureSpecCombinator<Type = <T as SpecCombinator>::Type>,
     <T as Combinator<'a, &'a [u8], Vec<u8>>>::Type: View<V = <T as SpecCombinator>::Type> + 'a,
-    <T as Combinator<'a, &'a [u8], Vec<u8>>>::SType: View<V = <T as SpecCombinator>::Type>,
+    <T as Combinator<'a, &'a [u8], Vec<u8>>>::SType: Copy + View<V = <T as SpecCombinator>::Type>,
 {
     type Type = <T as Combinator<'a, &'a [u8], Vec<u8>>>::Type;
     type SType = <T as Combinator<'a, &'a [u8], Vec<u8>>>::SType;

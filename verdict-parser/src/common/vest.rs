@@ -2,6 +2,7 @@
 
 pub use vest_lib::regular::modifier::*;
 pub use vest_lib::regular::bytes;
+pub use vest_lib::regular::bytes::Tail;
 pub use vest_lib::regular::variant::*;
 pub use vest_lib::regular::sequence::*;
 pub use vest_lib::regular::repetition::*;

@@ -15,6 +15,8 @@ mod option_deep;
 mod optional;
 mod unreachable;
 mod vest;
+mod vec_deep;
+mod wrapped;
 mod polyfill;
 
 pub use base64::*;
@@ -28,5 +30,7 @@ pub use mapper::*;
 pub use option_deep::*;
 pub use unreachable::*;
 pub use vest::*;
+pub use vec_deep::*;
+pub use wrapped::*;
 pub(crate) use polyfill::*;
 

@@ -37,11 +37,14 @@ where
 #[derive(Debug)]
 pub struct IdentityMapper<C>(pub PhantomData<C>);
 
+#[derive(Debug)]
+pub struct SpecIdentityMapper<C>(pub PhantomData<C>);
+
 impl<C: View> View for IdentityMapper<C> {
-    type V = IdentityMapper<C::V>;
+    type V = SpecIdentityMapper<C::V>;
 
     open spec fn view(&self) -> Self::V {
-        IdentityMapper(PhantomData)
+        SpecIdentityMapper(PhantomData)
     }
 }
 
@@ -51,19 +54,21 @@ impl<C> IdentityMapper<C> {
     }
 }
 
-impl<C: SpecCombinator> SpecIso for IdentityMapper<C> {
+impl<C: SecureSpecCombinator> SpecIso for SpecIdentityMapper<C> {
     type Src = C::Type;
     type Dst = C::Type;
 }
 
-impl<C: SpecCombinator> SpecIsoProof for IdentityMapper<C> {
+impl<C: SecureSpecCombinator> SpecIsoProof for SpecIdentityMapper<C> {
     proof fn spec_iso(s: Self::Src) {}
     proof fn spec_iso_rev(s: Self::Dst) {}
 }
 
 impl<'a, C> Iso<'a> for IdentityMapper<C> where
-    C: for<'x> Combinator<'x, &'x [u8], Vec<u8>>,
-    <C as View>::V: SecureSpecCombinator,
+    C: Combinator<'a, &'a [u8], Vec<u8>>,
+    <C as View>::V: SecureSpecCombinator<Type = <<C as Combinator<'a, &'a [u8], Vec<u8>>>::Type as View>::V>,
+    <C as Combinator<'a, &'a [u8], Vec<u8>>>::Type: 'a,
+    <C as Combinator<'a, &'a [u8], Vec<u8>>>::SType: for<'x> From<&'x <C as Combinator<'a, &'a [u8], Vec<u8>>>::Type>,
 {
     type Src = <C as Combinator<'a, &'a [u8], Vec<u8>>>::Type;
     type Dst = <C as Combinator<'a, &'a [u8], Vec<u8>>>::Type;
@@ -93,8 +98,8 @@ macro_rules! wrap_combinator {
         wrap_combinator! {
            $vis struct $name $({ $($field_vis $field_name: $field_type),* })?: $inner_type =>
                 spec <<$inner_type as View>::V as SpecCombinator>::Type,
-                exec<'a> <$inner_type as Combinator>::Result<'a>,
-                owned <$inner_type as Combinator>::Owned,
+                exec<'a> <$inner_type as Combinator<'a>>::SType,
+                owned <$inner_type as Combinator<'static>>::Type,
             = $inner_expr;
         }
     };
@@ -228,8 +233,8 @@ macro_rules! wrap_combinator_impls {
             }
 
             impl<$lt> Combinator<$lt, &$lt [u8], Vec<u8>> for $name {
-                type Type = $result;
-                type SType =  $owned;
+                type Type = $owned;
+                type SType = $result;
 
                 #[verifier::external_body]
                 fn length(&self, v: Self::SType) -> usize {

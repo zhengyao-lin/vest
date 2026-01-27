@@ -3,12 +3,12 @@ use vstd::prelude::*;
 
 verus! {
 
-/// Essentially doing OrdChoice((C1, C2), C2),
+/// Essentially doing Choice((C1, C2), C2),
 /// but the result is mapped through
 ///   Left((A, B)) <-> (Some(A), B)
 ///   Right(B) <-> (None, B)
 ///
-/// NOTE: we are not directly using OrdChoice since we don't want
+/// NOTE: we are not directly using Choice since we don't want
 /// to enforce C2::is_prefix_secure()
 #[derive(Debug, View)]
 pub struct Optional<C1, C2>(pub C1, pub C2);

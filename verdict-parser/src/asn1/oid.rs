@@ -12,9 +12,8 @@ asn1_tagged!(ObjectIdentifier, tag_of!(OBJECT_IDENTIFIER));
 
 pub type SpecObjectIdentifierValue = Seq<UInt>;
 
-pub type VecDeep<T> = RepeatResult<T>;
 #[derive(Eq, PartialEq)]
-pub struct ObjectIdentifierValue(pub VecDeep<UInt>);
+pub struct ObjectIdentifierValue(pub RepeatResult<UInt>);
 pub type ObjectIdentifierValueOwned = ObjectIdentifierValue;
 
 impl View for ObjectIdentifierValue {

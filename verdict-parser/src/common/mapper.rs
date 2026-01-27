@@ -124,17 +124,23 @@ macro_rules! mapper_iso_impls {
             impl SpecIso for $name {
                 type Src = $from<$($spec_type),*>;
                 type Dst = $to<$($spec_type),*>;
+            }
 
+            impl SpecIsoProof for $name {
                 proof fn spec_iso($forward_var: Self::Src) $forward_proof
                 proof fn spec_iso_rev($backward_var: Self::Dst) $backward_proof
             }
 
-            impl Iso for $name {
-                type Src<$lt> = $from<$($exec_type),*>;
-                type Dst<$lt> = $to<$($exec_type),*>;
+            impl<$lt> Iso<$lt> for $name {
+                type Src = $from<$($owned_type),*>;
+                type Dst = $to<$($owned_type),*>;
+                type RefSrc = $from<$($exec_type),*>;
+            }
 
-                type SrcOwned = $from<$($owned_type),*>;
-                type DstOwned = $to<$($owned_type),*>;
+            impl<$lt> From<&$lt $to<$($owned_type),*>> for $from<$($exec_type),*> {
+                fn ex_from(t: &$lt $to<$($owned_type),*>) -> Self {
+                    t
+                }
             }
         }
     }
